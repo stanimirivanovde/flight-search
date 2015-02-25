@@ -1,0 +1,30 @@
+{
+	"depart": {
+		"origins": [
+			"PHL",
+			"BWI"
+		],
+		"destinations": [
+			"VAR",
+			"SOF"
+		],
+		"dates": [
+			"2015-07-17",
+			"2015-07-18"
+		]
+	},
+	"returning": {
+		"origins": [
+			"MAD",
+			"BCN"
+		],
+		"destinations": [
+			"PHL",
+			"BWI"
+		],
+		"dates": [
+			"2015-08-15",
+			"2015-08-14"
+		]
+	}
+}

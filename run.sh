@@ -1,0 +1,1 @@
+javac -cp libs/jackson-core-2.5.1.jar:libs/jackson-databind-2.5.1.jar:libs/jackson-annotations-2.5.0.jar:. Flights.java TravelInfo.java Kayak.java URLOpener.java FlightsReader.java FlightPermutations.java && java -cp libs/jackson-core-2.5.1.jar:libs/jackson-databind-2.5.1.jar:libs/jackson-annotations-2.5.0.jar:. Flights $1

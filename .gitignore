@@ -1,0 +1,4 @@
+# Skip any java compilation files
+*.class
+# Skip Mac OS X files
+.DS_Store
