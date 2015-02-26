@@ -1,3 +1,5 @@
+package stan.flightsearch;
+
 public class Trip {
 	private TravelInfo depart;
 	private TravelInfo returning;
@@ -15,9 +17,13 @@ public class Trip {
 	public TravelInfo getReturning() { return returning; }
 
 	public void print() {
-		System.out.println( "The depart set-up:" );
-		depart.print();
-		System.out.println( "The return set-up:" );
-		returning.print();
+		if( depart != null ) {
+			System.out.println( "The depart set-up:" );
+			depart.print();
+		}
+		if( returning != null ) {
+			System.out.println( "The return set-up:" );
+			returning.print();
+		}
 	}
 }

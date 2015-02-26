@@ -1,3 +1,5 @@
+package stan.flightsearch;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,19 +10,19 @@ public class FlightPermutations {
 		this.flightInfo = flightInfo;
 	}
 
-	public ArrayList<String> generate() {
-		ArrayList<String> permutations = new ArrayList<String>();
+	public List<PermutationResult> generate() {
 		List<String> origins = flightInfo.getOrigins();
 		List<String> destinations = flightInfo.getDestinations();
 		List<String> dates = flightInfo.getDates();
 
+		List<PermutationResult> results = new ArrayList<PermutationResult>();
 		for( String origin : origins ) {
 			for( String destination : destinations ) {
 				for( String date : dates ) {
-					permutations.add( String.format( "%s-%s/%s", origin, destination, date ) );
+					results.add( new PermutationResult( origin, destination, date ) );
 				}
 			}
 		}
-		return permutations;
+		return results;
 	}
 }

@@ -1,3 +1,5 @@
+package stan.flightsearch;
+
 public interface Site {
 	public void generateURLs();
 	public void executeSearch();

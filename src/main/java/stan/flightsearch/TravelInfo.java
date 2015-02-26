@@ -1,3 +1,5 @@
+package stan.flightsearch;
+
 import java.util.List;
 
 public class TravelInfo {

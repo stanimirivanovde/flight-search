@@ -1,3 +1,5 @@
+package stan.flightsearch;
+
 import java.awt.Desktop;
 import java.net.URL;
 import java.net.URI;
