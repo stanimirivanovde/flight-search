@@ -2,3 +2,5 @@
 *.class
 # Skip Mac OS X files
 .DS_Store
+# Skip VIM swap files
+*.swp

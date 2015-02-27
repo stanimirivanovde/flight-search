@@ -13,9 +13,15 @@ public class URLOpener {
 	private List<String> urls;
 	private int sleepTime = 1000;
 
+	// Empty default constructor
+	public URLOpener() {}
+
 	public URLOpener( List<String> urlList ) {
 		this.urls = urlList;
 	}
+
+	public void setUrlList( List<String> list ) { urls = list; }
+	public List<String> getUrlList() { return urls; }
 
 	public void start() {
 		try {

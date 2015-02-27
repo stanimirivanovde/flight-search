@@ -11,7 +11,6 @@ public class Kayak implements Site {
 	// Constructor
 	public Kayak( Trip trip ) {
 		this.trip = trip;
-		generateURLs();
 	}
 
 	public void setTrips( Trip trip ) {
@@ -25,18 +24,15 @@ public class Kayak implements Site {
 		return baseUrl;
 	}
 
-	public void generateURLs() {
+	public List<String> getGeneratedUrls() { return generatedUrls; }
+
+	public void generateUrls() {
 		// A Kayak URL looks like this: http://www.kayak.com/flights/PHL-SOF/2015-07-11/MAD-PHL/2015-08-08;
 		if( trip.getDepart() != null && trip.getReturning() != null ) {
 			generateURLsMultiCity();
 		} else {
 			generateURLsOneWay();
 		}
-	}
-
-	public void executeSearch() {
-		URLOpener urlOpener = new URLOpener( generatedUrls );
-		urlOpener.start();
 	}
 
 	private void generateURLsMultiCity() {

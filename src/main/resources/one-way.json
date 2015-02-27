@@ -1,0 +1,16 @@
+{
+	"depart": {
+		"origins": [
+			"MAD",
+			"BCN"
+		],
+		"destinations": [
+			"PHL",
+			"BWI"
+		],
+		"dates": [
+			"2015-08-08",
+			"2015-08-07"
+		]
+	}
+}

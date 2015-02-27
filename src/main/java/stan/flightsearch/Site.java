@@ -1,8 +1,11 @@
 package stan.flightsearch;
 
+import java.util.List;
+
 public interface Site {
-	public void generateURLs();
-	public void executeSearch();
+	public void generateUrls();
 	public void setBaseUrl( String url );
 	public String getBaseUrl();
+	public List<String> getGeneratedUrls();
+
 }

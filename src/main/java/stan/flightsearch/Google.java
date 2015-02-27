@@ -11,7 +11,6 @@ public class Google implements Site {
 	// Constructor
 	public Google( Trip trip ) {
 		this.trip = trip;
-		generateURLs();
 	}
 
 	public void setTrips( Trip trip ) {
@@ -25,18 +24,15 @@ public class Google implements Site {
 		return baseUrl;
 	}
 
-	public void generateURLs() {
+	public List<String> getGeneratedUrls() { return generatedUrls; }
+
+	public void generateUrls() {
 		// Google URL looks like https://www.google.com/flights/#search;iti=PHL_VAR_2015-03-13*MAD_PHL_2015-03-20;tt=m
 		if( trip.getDepart() != null && trip.getReturning() != null ) {
 			generateURLsMultiCity();
 		} else {
 			generateURLsOneWay();
 		}
-	}
-
-	public void executeSearch() {
-		URLOpener urlOpener = new URLOpener( generatedUrls );
-		urlOpener.start();
 	}
 
 	private void generateURLsMultiCity() {
