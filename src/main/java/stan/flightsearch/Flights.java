@@ -14,15 +14,21 @@ public class Flights {
 			Trip trip = flightsReader.parseJson();
 			Site kayak = new Kayak( trip );
 			Site google = new Google( trip );
+			Site momondo = new Momondo( trip );
 			kayak.generateUrls();
 			google.generateUrls();
+			momondo.generateUrls();
 
 			URLOpener urlOpener = new URLOpener();
 			// Open Kayak links
+			/*
 			urlOpener.setUrlList( kayak.getGeneratedUrls() );
 			urlOpener.start();
 			// Open Google links
 			urlOpener.setUrlList( google.getGeneratedUrls() );
+			urlOpener.start();
+			*/
+			urlOpener.setUrlList( momondo.getGeneratedUrls() );
 			urlOpener.start();
 
 		} catch( Exception e ) { 

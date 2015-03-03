@@ -3,9 +3,9 @@ package stan.flightsearch;
 public class PermutationResult {
 	private String from;
 	private String to;
-	private String date;
+	private FlightDate date;
 
-	public PermutationResult( String from, String to, String date ) {
+	public PermutationResult( String from, String to, FlightDate date ) {
 		this.from = from;
 		this.to = to;
 		this.date = date;
@@ -13,10 +13,10 @@ public class PermutationResult {
 
 	public void setFrom( String s ) { from = s; }
 	public void setTo( String s ) { to = s; }
-	public void setDate( String s ) { date = s; }
+	public void setDate( FlightDate d ) { date = d; }
 
 	public String getFrom() { return from; }
 	public String getTo() { return to; }
-	public String getDate() { return date; }
+	public FlightDate getDate() { return date; }
 }
 

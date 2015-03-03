@@ -1,34 +1,40 @@
 package stan.flightsearch;
 
 import java.util.List;
+import java.lang.StringBuilder;
 
 public class TravelInfo {
 	private List<String> origins;
 	private List<String> destinations;
-	private List<String> dates;
+	private List<FlightDate> dates;
 
 	public TravelInfo() {}
-	public TravelInfo( List<String> from, List<String> to, List<String> date ) {
+	public TravelInfo( List<String> from, List<String> to, List<FlightDate> dateList ) {
 		this.origins = from;
 		this.destinations = to;
-		this.dates = date;
+		this.dates = dateList;
 	}
-	public void print() {
-		System.out.println( "The origins:" );
-		System.out.println( origins );
-		System.out.println( "The destinations:" );
-		System.out.println( destinations );
-		System.out.println( "The dates:" );
-		System.out.println( dates );
+
+	@Override public String toString() {
+		StringBuilder stringBuilder = new StringBuilder();
+		String newLine = System.getProperty("line.separator");
+
+		stringBuilder.append( "TravelInfo:" + newLine );
+		// Indent the content.
+		stringBuilder.append( " " + origins + newLine );
+		stringBuilder.append( " " + destinations + newLine );
+		stringBuilder.append( " " + dates + newLine + newLine );
+
+		return stringBuilder.toString();
 	}
 
 	public void setOrigins( List<String> list ) { this.origins = list; }
 	public void setDestinations( List<String> list ) { this.destinations = list; }
-	public void setDates( List<String> list ) { this.dates = list; }
+	public void setDates( List<FlightDate> list ) { this.dates = list; }
 
 	public List<String> getOrigins() { return origins; }
 	public List<String> getDestinations() { return destinations; }
-	public List<String> getDates() { return dates; }
+	public List<FlightDate> getDates() { return dates; }
 
 	public void addOrigin( String origin ) {
 		origins.add( origin );
@@ -36,7 +42,7 @@ public class TravelInfo {
 	public void addDestination( String destination ) {
 		destinations.add( destination );
 	}
-	public void addDate( String date ) {
+	public void addDate( FlightDate date ) {
 		dates.add( date );
 	}
 }

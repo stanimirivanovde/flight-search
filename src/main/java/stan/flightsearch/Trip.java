@@ -1,5 +1,7 @@
 package stan.flightsearch;
 
+import java.lang.StringBuilder;
+
 public class Trip {
 	private TravelInfo depart;
 	private TravelInfo returning;
@@ -16,14 +18,17 @@ public class Trip {
 	public TravelInfo getDepart() { return depart; }
 	public TravelInfo getReturning() { return returning; }
 
-	public void print() {
+	@Override public String toString() {
+		StringBuilder stringBuilder = new StringBuilder();
+		String newLine = System.getProperty("line.separator");
+
+		stringBuilder.append( "Trip: " + newLine );
 		if( depart != null ) {
-			System.out.println( "The depart set-up:" );
-			depart.print();
+			stringBuilder.append( " " + depart + newLine );
 		}
 		if( returning != null ) {
-			System.out.println( "The return set-up:" );
-			returning.print();
+			stringBuilder.append( " " + returning + newLine );
 		}
+		return stringBuilder.toString();
 	}
 }

@@ -45,14 +45,34 @@ public class Google implements Site {
 		System.out.println( "Number of total URLs: " + departList.size() * returningList.size() );
 		for( PermutationResult depart : departList ) {
 			for( PermutationResult returning : returningList ) {
-				String currentUrl = String.format( "%s%s_%s_%s*%s_%s_%s;tt=m",
+				String currentUrl = String.format( 
+						// BaseURL
+						"%s" +
+						// Depart From
+						"%s_" +
+						// Depart To
+						"%s_" +
+						// Depart Date
+						"%d-%02d-%02d*" +
+						// Return From
+						"%s_" +
+						// Return To
+						"%s_" +
+						// Return Date
+						"%d-%02d-%02d" +
+						// End of URL
+						";tt=m",
 						baseUrl,
 						depart.getFrom(),
 						depart.getTo(),
-						depart.getDate(),
+						depart.getDate().getYear(),
+						depart.getDate().getMonth(),
+						depart.getDate().getDay(),
 						returning.getFrom(),
 						returning.getTo(),
-						returning.getDate()
+						returning.getDate().getYear(),
+						returning.getDate().getMonth(),
+						returning.getDate().getDay()
 				);
 				System.out.println( "Generated the URL: " + currentUrl );
 				generatedUrls.add( currentUrl );

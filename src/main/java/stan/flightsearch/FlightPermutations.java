@@ -13,12 +13,12 @@ public class FlightPermutations {
 	public List<PermutationResult> generate() {
 		List<String> origins = flightInfo.getOrigins();
 		List<String> destinations = flightInfo.getDestinations();
-		List<String> dates = flightInfo.getDates();
+		List<FlightDate> dates = flightInfo.getDates();
 
 		List<PermutationResult> results = new ArrayList<PermutationResult>();
 		for( String origin : origins ) {
 			for( String destination : destinations ) {
-				for( String date : dates ) {
+				for( FlightDate date : dates ) {
 					results.add( new PermutationResult( origin, destination, date ) );
 				}
 			}

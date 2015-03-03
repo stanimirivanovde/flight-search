@@ -34,77 +34,12 @@ public class FlightsReader {
 		try {
 			ObjectMapper om = new ObjectMapper();
 			Trip t = om.readValue( new File( fileName ), Trip.class );
-			t.print();
+			System.out.println( t );
 			return t;
 		} catch( IOException e ) {
 			e.printStackTrace();
 		}
 		return null;
-
-		/*
-		// List of all the trips
-		List<Trip> tripList = new ArrayList<Trip>();
-		try {
-			System.out.println( "Opening the file: " + fileName );
-			JsonParser jsonParser = new JsonFactory().createParser( new File( fileName ) );
-
-			ObjectMapper objectMapper = new ObjectMapper();
-
-			Trip currentTrip = new Trip();
-			int count = 0;
-			while( !jsonParser.isClosed() ) {
-				jsonParser.nextToken();
-				String name = jsonParser.getCurrentName();
-				//System.out.println( "Parsing the current name: " + name + " and the text: " + jsonParser.getText() );
-				if( "depart".equals( name ) ) {
-					TravelInfo depart = parseSection( jsonParser );
-					currentTrip.setDepart( depart );
-				} else if( "return".equals( name ) ) {
-					TravelInfo myReturn = parseSection( jsonParser );
-					currentTrip.setReturn( myReturn );
-					tripList.add( currentTrip );
-					currentTrip = new Trip();
-				}
-			}
-
-			System.out.println( "Finally gathered " + tripList.size() + " number of trips" );
-			for( Trip trip : tripList ) {
-				trip.print();
-			}
-		} catch( Exception e ) {
-			System.out.println( "The exception: " + e );
-			e.printStackTrace();
-		}
-		return tripList;
-		*/
     }
-
-	private TravelInfo parseSection( JsonParser jsonParser ) {
-		TravelInfo info = new TravelInfo();
-		/*
-		try {
-			while( jsonParser.nextToken() != JsonToken.END_OBJECT && !jsonParser.isClosed() ) {
-				String name = jsonParser.getCurrentName();
-				if( "from".equals( name ) ) {
-					jsonParser.nextToken();
-					info.setFrom( jsonParser.getText() );
-				} else if( "to".equals( name ) ) {
-					jsonParser.nextToken();
-					info.setTo( jsonParser.getText() );
-				} else if( "date".equals( name ) ) {
-					jsonParser.nextToken();
-					info.setDate( jsonParser.getText() );
-					// We are done with the current part
-					break;
-				}
-			}
-			// Get pass the finalizing "}" for this object
-			jsonParser.nextToken();
-		} catch( IOException e ) {
-			System.out.println( "An exception was thrown: " + e );
-		}
-		*/
-		return info;
-	}
 }
 
