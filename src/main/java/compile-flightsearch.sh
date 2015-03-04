@@ -1,1 +1,1 @@
-javac -Xlint:unchecked -cp ../../../lib/*:. stan/flightsearch/*.java && java -cp ../../../lib/*:. stan/flightsearch/Flights $1
+javac -Xlint:unchecked -cp ../../../lib/*:. stan/flightsearch/*.java && java -cp ../../../lib/*:. stan/flightsearch/Flights $*

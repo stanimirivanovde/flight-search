@@ -1,0 +1,10 @@
+In order to extend the tool and add more modules you'll need to do the following:
+
+1. Add a new Enum in SupportedSitesEnum.java.
+2. Extend the interface Site with your new site.
+3. Create an entry for it in the SiteFactory.java.
+4. Add command line options for the new site in ProcessCommandLineArguments.java.
+4. Instantiate your site in the main Flights.java class.
+
+
+Have fun!

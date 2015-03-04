@@ -17,23 +17,23 @@ import java.util.List;
 import java.io.IOException;
 
 public class FlightsReader {
-	private String fileName = "";
+	private File file;
 
-	public FlightsReader( String fileName ) {
-		this.fileName = fileName;
+	public FlightsReader( File file ) {
+		this.file = file;
 	}
 
-	public void setFileName( String file ) {
-		this.fileName = file;
+	public void setFile( File file ) {
+		this.file = file;
 	}
-	public String getFileName() {
-		return fileName;
+	public File getFile() {
+		return file;
 	}
 
     public Trip parseJson() {
 		try {
 			ObjectMapper om = new ObjectMapper();
-			Trip t = om.readValue( new File( fileName ), Trip.class );
+			Trip t = om.readValue( file, Trip.class );
 			System.out.println( t );
 			return t;
 		} catch( IOException e ) {

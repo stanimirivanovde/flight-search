@@ -5,53 +5,94 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
+import org.apache.commons.cli.OptionBuilder;
+import org.apache.commons.cli.Option;
 import org.apache.commons.cli.ParseException;
 
-import java.lang.IllegalArgumentException;
+import java.io.File;
+import java.util.ArrayList;
 
 public class ProcessCommandLineArguments {
 	private Options options = new Options();
 	private String[] args = null;
 
+	// The actual parsed options will go to these variables
+	private File jsonFile;
+	private ArrayList<SupportedSitesEnum> sites;
+	private boolean generateOnly = false;
+
 	public ProcessCommandLineArguments( String[] args ) {
 		this.args = args;
+		createOptions();
+	}
 
-		options.addOption( "h", "help", false, "Show help.");
-		options.addOption( "s", "site", true, "The site you want to search. Currently supported sites are: Kayak, Google, Momondo.");
-		options.addOption( "f", "file", true, "The JSON file that contains your search configuration." );
+	private void createOptions() {
+		boolean withArguments = true;
+		boolean noArguments = false;
+
+		Option help = new Option( "h", "help", noArguments, "Print this message." );
+		Option generate = new Option( "g", "generate-urls", noArguments, "Generate the URLs only without executing them." );
+		Option site = OptionBuilder.withArgName( "SITE" )
+							.withLongOpt( "site" )
+							.withDescription( "The site you want to search. Currently supported sites are: Kayak, Google, Momondo." )
+							.isRequired()
+							.hasArgs()
+							.create( "s" );
+		Option file = OptionBuilder.withArgName( "FILE" )
+							.withLongOpt( "file" )
+							.withDescription( "The JSON file that contains your search configuration." )
+							.isRequired()
+							.hasArgs( 1 )
+							.create( "f" );
+
+		options.addOption( help );
+		options.addOption( site );
+		options.addOption( file );
+		options.addOption( generate );
+	}
+
+	private void printHelp() {
+		HelpFormatter formater = new HelpFormatter();
+		formater.printHelp("FlightSearch", options);
+		System.exit(0);
+	}
+
+	private ArrayList<SupportedSitesEnum> getSupportedSites( String[] sitesArray ) {
+		ArrayList<SupportedSitesEnum> list = new ArrayList<SupportedSitesEnum>();
+		int arrayIndex = 0;
+		try {
+			while( arrayIndex < sitesArray.length ) {
+				list.add( SupportedSitesEnum.valueOf( sitesArray[ arrayIndex ].toUpperCase() ) );
+				++arrayIndex;
+			}
+		} catch( IllegalArgumentException e ) {
+			System.err.println( "Unsupported site has been specified: " + sitesArray[ arrayIndex ] );
+			printHelp();
+		}
+		return list;
 	}
 
 	public void parse() {
 		CommandLineParser parser = new BasicParser();
-
-		CommandLine cmd = null;
 		try {
-			cmd = parser.parse(options, args);
-
+			CommandLine cmd = parser.parse(options, args);
 			if( cmd.hasOption( "h" ) ) {
-				help();
+				printHelp();
 			}
-
-			if( cmd.hasOption( "s" ) ) {
-				System.out.println( "Using cli argument -s=" + cmd.getOptionValue("s") );
-				// Whatever you want to do with the setting goes here
-			} else {
-				System.out.println( "Missing s option" );
-				help();
+			jsonFile = new File( cmd.getOptionValue( "f" ) );
+			if( !jsonFile.exists() ) {
+				throw new ParseException( "The specified JSON file doesn't exist." );
 			}
-
+			sites = getSupportedSites( cmd.getOptionValues( "s" ) );
+			generateOnly = cmd.hasOption( "g" );
 		} catch (ParseException e) {
-			System.out.println( "Failed to parse comand line properties: " + e );
-			help();
+			System.err.println( e.getMessage() );
+			printHelp();
 		}
 	}
 
-	private void help() {
-		// This prints out some help
-		HelpFormatter formater = new HelpFormatter();
-
-		formater.printHelp("FlightSearch", options);
-		System.exit(0);
-	}
+	public File getJsonFile() { return jsonFile; }
+	public ArrayList<SupportedSitesEnum> getSites() { return sites; }
+	public boolean getGenerateOnly() { return generateOnly; }
 }
 

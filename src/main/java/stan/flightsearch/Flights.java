@@ -1,62 +1,40 @@
 package stan.flightsearch;
 
+import java.util.ArrayList;
+
 public class Flights {
 	public static void main( String[] args ) {
 		try {
-			if( args.length != 1 ) {
-				printHelp();
-				System.exit( 1 );
-			}
-
-		//	ProcessCommandLineArguments argumentProcessor = new ProcessCommandLineArguments( args );
-		//	argumentProcessor.parse();
-
-			String fileName = args[ 0 ];
+			ProcessCommandLineArguments argumentProcessor = new ProcessCommandLineArguments( args );
+			argumentProcessor.parse();
 
 			// Get our trip details
-			FlightsReader flightsReader = new FlightsReader( fileName );
+			FlightsReader flightsReader = new FlightsReader( argumentProcessor.getJsonFile() );
 			Trip trip = flightsReader.parseJson();
 
+			// This is used to create each site
 			SiteFactory factory = new SiteFactory();
+			// This will hold the list of sites we want to search
+			ArrayList<Site> sites = new ArrayList<Site>();
+			for( SupportedSitesEnum s : argumentProcessor.getSites() ) {
+				sites.add( factory.createSite( s, trip ) );
+			}
 
-			// Get our sites ready
-			Site kayak = factory.createSite( SupportedSitesEnum.KAYAK, trip );
-			Site momondo = factory.createSite( SupportedSitesEnum.MOMONDO, trip );
-			Site google = factory.createSite( SupportedSitesEnum.GOOGLE, trip );
-
-			kayak.generateUrls();
-			google.generateUrls();
-			momondo.generateUrls();
-
-			URLOpener urlOpener = new URLOpener();
-			/*
-			// Open Kayak links
-			urlOpener.setUrlList( kayak.getGeneratedUrls() );
-			urlOpener.start();
-			// Open Google links
-			urlOpener.setUrlList( google.getGeneratedUrls() );
-			urlOpener.start();
-			*/
-			urlOpener.setUrlList( momondo.getGeneratedUrls() );
-			urlOpener.start();
-
+			// Generate the URLs
+			for( Site site : sites ) {
+				site.generateUrls();
+			}
+			if( !argumentProcessor.getGenerateOnly() ) {
+				// Open the URLs
+				URLOpener urlOpener = new URLOpener();
+				for( Site site: sites ) {
+					urlOpener.setUrlList( site.getGeneratedUrls() );
+					urlOpener.start();
+				}
+			}
 		} catch( Exception e ) { 
-			System.out.println( "Error in opening the page: " + e );
+			System.out.println( "Unexpected exception: " + e );
 			e.printStackTrace();
 		}
 	}  
-
-	private static void printHelp() {
-		System.out.print(
-				"This is a program that will run flight searches on multiple websites. The supported list so far is Kayak and Google.\n" +
-				"The program will generate all the permutations based on a JSON config file that is supplied on the command line.\n\n" +
-				"Usage:\n" +
-				"    Flights <json_file>\n\n" +
-				"JSON File Structure:\n" +
-				"    There are currently 2 supported JSON formats: one way flights and multi-city flights. The multi-city flights are\n" +
-				"capped at 2 (origin->destination and origin->destination pairs). Check the two example files in the resources directory:\n" +
-				"resources/multi-city.json\n" +
-				"resources/one-way.json\n"
-		);
-	}
 }
