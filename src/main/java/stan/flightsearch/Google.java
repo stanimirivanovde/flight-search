@@ -8,12 +8,13 @@ public class Google implements Site {
 	private String baseUrl = "https://www.google.com/flights/#search;iti=";
 	private List<String> generatedUrls = new ArrayList<String>();
 
-	// Constructor
+	// Constructors
+	public Google() {}
 	public Google( Trip trip ) {
 		this.trip = trip;
 	}
 
-	public void setTrips( Trip trip ) {
+	public void setTrip( Trip trip ) {
 		this.trip = trip;
 	}
 	public void setBaseUrl( String url ) {

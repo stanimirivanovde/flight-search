@@ -8,12 +8,13 @@ public class Momondo implements Site {
 	private String baseUrl = "http://www.momondo.com";
 	private List<String> generatedUrls = new ArrayList<String>();
 
-	// Constructor
+	// Constructors
+	public Momondo() {}
 	public Momondo( Trip trip ) {
 		this.trip = trip;
 	}
 
-	public void setTrips( Trip trip ) {
+	public void setTrip( Trip trip ) {
 		this.trip = trip;
 	}
 	public void setBaseUrl( String url ) {

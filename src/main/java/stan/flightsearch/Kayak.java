@@ -8,12 +8,13 @@ public class Kayak implements Site {
 	private String baseUrl = "http://www.kayak.com";
 	private List<String> generatedUrls = new ArrayList<String>();
 
-	// Constructor
+	// Constructors
+	public Kayak() {}
 	public Kayak( Trip trip ) {
 		this.trip = trip;
 	}
 
-	public void setTrips( Trip trip ) {
+	public void setTrip( Trip trip ) {
 		this.trip = trip;
 	}
 	public void setBaseUrl( String url ) {

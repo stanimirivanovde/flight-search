@@ -7,5 +7,5 @@ public interface Site {
 	public void setBaseUrl( String url );
 	public String getBaseUrl();
 	public List<String> getGeneratedUrls();
-
+	public void setTrip( Trip trip );
 }

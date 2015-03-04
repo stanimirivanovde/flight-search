@@ -8,20 +8,29 @@ public class Flights {
 				System.exit( 1 );
 			}
 
+		//	ProcessCommandLineArguments argumentProcessor = new ProcessCommandLineArguments( args );
+		//	argumentProcessor.parse();
+
 			String fileName = args[ 0 ];
 
+			// Get our trip details
 			FlightsReader flightsReader = new FlightsReader( fileName );
 			Trip trip = flightsReader.parseJson();
-			Site kayak = new Kayak( trip );
-			Site google = new Google( trip );
-			Site momondo = new Momondo( trip );
+
+			SiteFactory factory = new SiteFactory();
+
+			// Get our sites ready
+			Site kayak = factory.createSite( SupportedSitesEnum.KAYAK, trip );
+			Site momondo = factory.createSite( SupportedSitesEnum.MOMONDO, trip );
+			Site google = factory.createSite( SupportedSitesEnum.GOOGLE, trip );
+
 			kayak.generateUrls();
 			google.generateUrls();
 			momondo.generateUrls();
 
 			URLOpener urlOpener = new URLOpener();
-			// Open Kayak links
 			/*
+			// Open Kayak links
 			urlOpener.setUrlList( kayak.getGeneratedUrls() );
 			urlOpener.start();
 			// Open Google links
