@@ -1,7 +1,9 @@
 apply plugin: 'java'
+apply plugin: 'application'
 
 sourceCompatibility = 1.8
 version = '1.0'
+mainClassName = "stan.flightsearch.Flights"
 jar {
 	manifest {
 		attributes 'Implementation-Title': 'Flight Search',
@@ -28,6 +30,13 @@ dependencies {
 	testCompile 'org.seleniumhq.selenium:selenium-java:2.45.0'
 }
 
-sourceSets {
-	    println main.output.classesDir
+run {    
+	/* Can pass all the properties: */
+	systemProperties System.getProperties()
+
+	/* Or just each by name: */
+	systemProperty "myvariable", System.getProperty("myvariable")
+
+	/* Need to split the space-delimited value in the exec.args */
+	args System.getProperty("exec.args").split()    
 }
