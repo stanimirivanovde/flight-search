@@ -9,6 +9,8 @@ public class SiteFactory {
 				return new Google( trip );
 			case MOMONDO:
 				return new Momondo( trip );
+			case HIPMUNK:
+				return new Hipmunk( trip );
 			default:
 				System.out.println( "Bad site ID has been provided: " + siteId );
 				return null;

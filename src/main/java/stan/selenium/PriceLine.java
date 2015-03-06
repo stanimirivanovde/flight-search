@@ -11,7 +11,9 @@ import org.openqa.selenium.support.ui.Select;
 
 import com.thoughtworks.selenium.DefaultSelenium;
 import com.thoughtworks.selenium.Selenium;
-import org.openqa.selenium.WebDriverBackedSelenium;
+import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
+
+//import org.openqa.selenium.WebDriverBackedSelenium;
 
 
 public class PriceLine {

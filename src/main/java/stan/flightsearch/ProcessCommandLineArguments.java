@@ -34,7 +34,7 @@ public class ProcessCommandLineArguments {
 		Option generate = new Option( "g", "generate-urls", noArguments, "Generate the URLs only without executing them." );
 		Option site = OptionBuilder.withArgName( "SITE" )
 							.withLongOpt( "site" )
-							.withDescription( "The site you want to search. Currently supported sites are: Kayak, Google, Momondo." )
+							.withDescription( "The site you want to search. Currently supported sites are: Kayak, Google, Momondo, Hipmunk." )
 							.isRequired()
 							.hasArgs()
 							.create( "s" );

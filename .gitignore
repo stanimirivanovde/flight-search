@@ -4,3 +4,8 @@
 .DS_Store
 # Skip VIM swap files
 *.swp
+# Skip gradle's build directory
+build/
+# Skip gradle's config files
+.gradle/
+

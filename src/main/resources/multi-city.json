@@ -17,8 +17,7 @@
 	},
 	"returning": {
 		"origins": [
-			"MAD",
-			"BCN"
+			"MAD"
 		],
 		"destinations": [
 			"PHL",
