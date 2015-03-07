@@ -96,6 +96,8 @@ public class Momondo implements Site {
 	}
 
 	private void generateURLsOneWay() {
+	 // TODO: implement this!
+	/*
 		TravelInfo travelInfo;
 		if( trip.getDepart() != null ) {
 			travelInfo = trip.getDepart();
@@ -118,5 +120,6 @@ public class Momondo implements Site {
 			System.out.println( "Generated the URL: " + currentUrl );
 			generatedUrls.add( currentUrl );
 		}
+	*/
 	}
 }

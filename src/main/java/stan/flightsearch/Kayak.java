@@ -54,7 +54,7 @@ public class Kayak implements Site {
 						// Depart To
 						"%s/" +
 						// Depart Date
-						"%d-%02d-%2d/" +
+						"%d-%02d-%02d/" +
 						// Return From
 						"%s-" + 
 						// Return To
