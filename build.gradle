@@ -32,12 +32,14 @@ dependencies {
 }
 
 run {    
-	/* Can pass all the properties: */
+	// Can pass all the properties:
 	systemProperties System.getProperties()
 
-	/* Or just each by name: */
+	// Or just each by name:
 	systemProperty "myvariable", System.getProperty("myvariable")
 
-	/* Need to split the space-delimited value in the exec.args */
-	args System.getProperty("exec.args").split()    
+	if( System.hasProperty( "exec.args" ) ) {
+		// Need to split the space-delimited value in the exec.args
+		args System.getProperty("exec.args").split()    
+	}
 }

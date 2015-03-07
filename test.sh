@@ -1,1 +1,1 @@
-gradle test jacocoTestReport -Dexec.args="$*"
+gradle test jacocoTestReport
