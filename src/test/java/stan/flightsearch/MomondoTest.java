@@ -5,8 +5,6 @@ import org.junit.*;
 import java.util.Arrays;
 import java.util.List;
 
-//import stan.flightsearch.FlightDate;
-
 public class MomondoTest {
 	private Trip trip;
 	private TripGenerator tripGenerator = new TripGenerator();
@@ -50,8 +48,7 @@ public class MomondoTest {
 			Assert.assertEquals( urls.get( 0 ), "http://www.momondo.com/multicity/?Search=true&TripType=multi&SegNo=2&SO0=PHL&SD0=VAR&SDP0=03-12-1984&SO1=MAD&SD1=PHL&SDP1=24-12-1984&AD=1&TK=ECO&NA=false" );
 		}
 
-	/*
-	 // TODO: implement this once the functionality is supported.
+	@Ignore( "enable this when the functionality is implemented" )
 	@Test
 		public void oneWayDepart() throws Exception {
 			// Generate the trip
@@ -67,6 +64,7 @@ public class MomondoTest {
 			Assert.assertEquals( urls.get( 0 ), "http://www.kayak.com/flights/PHL-VAR/1984-12-03" );
 		}
 
+	@Ignore( "enable this when the functionality is implemented" )
 	@Test
 		public void oneWayReturn() throws Exception {
 			// Generate the trip
@@ -81,7 +79,6 @@ public class MomondoTest {
 			Assert.assertEquals( urls.size(), 1 );
 			Assert.assertEquals( urls.get( 0 ), "http://www.kayak.com/flights/PHL-VAR/1984-12-03" );
 		}
-		*/
 
 	@After
 		public void tearDown() throws Exception {

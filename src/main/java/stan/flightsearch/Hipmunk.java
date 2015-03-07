@@ -54,7 +54,7 @@ public class Hipmunk implements Site {
 						// Depart To
 						"t0=%s;" +
 						// Depart Date
-						"d0=%d-%02d-%2d;" +
+						"d0=%d-%02d-%02d;" +
 						// Return From
 						"f1=%s;" + 
 						// Return To

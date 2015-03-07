@@ -5,8 +5,6 @@ import org.junit.*;
 import java.util.Arrays;
 import java.util.List;
 
-//import stan.flightsearch.FlightDate;
-
 public class KayakTest {
 	private Trip trip;
 	private TripGenerator tripGenerator = new TripGenerator();

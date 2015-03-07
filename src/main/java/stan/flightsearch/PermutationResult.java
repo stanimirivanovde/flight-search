@@ -5,6 +5,7 @@ public class PermutationResult {
 	private String to;
 	private FlightDate date;
 
+	public PermutationResult() {}
 	public PermutationResult( String from, String to, FlightDate date ) {
 		this.from = from;
 		this.to = to;
