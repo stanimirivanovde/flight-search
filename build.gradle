@@ -32,14 +32,9 @@ dependencies {
 }
 
 run {    
-	// Can pass all the properties:
-	systemProperties System.getProperties()
-
-	// Or just each by name:
-	systemProperty "myvariable", System.getProperty("myvariable")
-
-	if( System.hasProperty( "exec.args" ) ) {
+	if( project.hasProperty( "args" ) ) {
 		// Need to split the space-delimited value in the exec.args
-		args System.getProperty("exec.args").split()    
+		args project.getProperty("args").split()
 	}
+	standardInput = System.in
 }

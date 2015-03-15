@@ -26,7 +26,7 @@ public class Flights {
 			}
 			if( !argumentProcessor.getGenerateOnly() ) {
 				// Open the URLs
-				URLOpener urlOpener = new URLOpener();
+				URLOpener urlOpener = new URLOpener( argumentProcessor.getNumberOfPagesToOpenAtOnce() );
 				for( Site site: sites ) {
 					urlOpener.setUrlList( site.getGeneratedUrls() );
 					urlOpener.start();

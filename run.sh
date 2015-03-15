@@ -1,1 +1,1 @@
-gradle run -Dexec.args="$*"
+gradle run -Pargs="$*"

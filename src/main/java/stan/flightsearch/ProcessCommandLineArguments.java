@@ -20,6 +20,7 @@ public class ProcessCommandLineArguments {
 	private File jsonFile;
 	private ArrayList<SupportedSitesEnum> sites;
 	private boolean generateOnly = false;
+	private int numberOfPagesToOpenAtOnce = 50;
 
 	public ProcessCommandLineArguments( String[] args ) {
 		this.args = args;
@@ -34,7 +35,7 @@ public class ProcessCommandLineArguments {
 		Option generate = new Option( "g", "generate-urls", noArguments, "Generate the URLs only without executing them." );
 		Option site = OptionBuilder.withArgName( "SITE" )
 							.withLongOpt( "site" )
-							.withDescription( "The site you want to search. Currently supported sites are: Kayak, Google, Momondo, Hipmunk." )
+							.withDescription( "The site you want to search. Currently supported sites are: Kayak, Google, Momondo, Hipmunk, FlightHub." )
 							.isRequired()
 							.hasArgs()
 							.create( "s" );
@@ -44,11 +45,18 @@ public class ProcessCommandLineArguments {
 							.isRequired()
 							.hasArgs( 1 )
 							.create( "f" );
+		Option paginate = OptionBuilder.withArgName( "NUMBER OF PAGES" )
+							.withLongOpt( "paginate" )
+							.withDescription( "The number of pages in a page. When that number of pages has been opened the user will be prompted to press enter in order to continue with the next page. The default number is 50 pages." )
+							.isRequired()
+							.hasArgs( 1 )
+							.create( "p" );
 
 		options.addOption( help );
 		options.addOption( site );
 		options.addOption( file );
 		options.addOption( generate );
+		options.addOption( paginate );
 	}
 
 	private void printHelp() {
@@ -85,6 +93,7 @@ public class ProcessCommandLineArguments {
 			}
 			sites = getSupportedSites( cmd.getOptionValues( "s" ) );
 			generateOnly = cmd.hasOption( "g" );
+			numberOfPagesToOpenAtOnce = Integer.parseInt( cmd.getOptionValue( "p" ) );
 		} catch (ParseException e) {
 			System.err.println( e.getMessage() );
 			printHelp();
@@ -94,5 +103,6 @@ public class ProcessCommandLineArguments {
 	public File getJsonFile() { return jsonFile; }
 	public ArrayList<SupportedSitesEnum> getSites() { return sites; }
 	public boolean getGenerateOnly() { return generateOnly; }
+	public int getNumberOfPagesToOpenAtOnce() { return numberOfPagesToOpenAtOnce; }
 }
 

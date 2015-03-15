@@ -11,6 +11,8 @@ public class SiteFactory {
 				return new Momondo( trip );
 			case HIPMUNK:
 				return new Hipmunk( trip );
+			case FLIGHTHUB:
+				return new FlightHub( trip );
 			default:
 				System.out.println( "Bad site ID has been provided: " + siteId );
 				return null;
