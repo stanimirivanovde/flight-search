@@ -1,0 +1,13 @@
+Trip:
+ TravelInfo:
+ [PHL, BWI]
+ [VAR, SOF]
+ [FlightDate: 2015-07-11, FlightDate: 2015-07-12]
+
+
+ TravelInfo:
+ [MAD, VAR]
+ [PHL, BWI]
+ [FlightDate: 2015-08-08, FlightDate: 2015-08-09]
+
+

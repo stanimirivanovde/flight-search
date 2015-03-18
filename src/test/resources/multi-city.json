@@ -1,0 +1,46 @@
+{
+	"depart": {
+		"origins": [
+			"PHL",
+			"BWI"
+		],
+		"destinations": [
+			"VAR",
+			"SOF"
+		],
+		"dates": [
+			{
+				"day": 11,
+				"month": 7,
+				"year": 2015
+			},
+			{
+				"day": 12,
+				"month": 7,
+				"year": 2015
+			}
+		]
+	},
+	"returning": {
+		"origins": [
+			"MAD",
+			"VAR"
+		],
+		"destinations": [
+			"PHL",
+			"BWI"
+		],
+		"dates": [
+			{
+				"day": 8,
+				"month": 8,
+				"year": 2015
+			},
+			{
+				"day": 9,
+				"month": 8,
+				"year": 2015
+			}
+		]
+	}
+}

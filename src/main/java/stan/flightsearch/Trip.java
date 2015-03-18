@@ -22,7 +22,7 @@ public class Trip {
 		StringBuilder stringBuilder = new StringBuilder();
 		String newLine = System.getProperty("line.separator");
 
-		stringBuilder.append( "Trip: " + newLine );
+		stringBuilder.append( "Trip:" + newLine );
 		if( depart != null ) {
 			stringBuilder.append( " " + depart + newLine );
 		}

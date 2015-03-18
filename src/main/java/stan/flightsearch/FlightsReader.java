@@ -1,45 +1,34 @@
 package stan.flightsearch;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonToken;
-
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.io.IOException;
 
-public class FlightsReader {
-	private File file;
-
-	public FlightsReader( File file ) {
-		this.file = file;
-	}
-
-	public void setFile( File file ) {
-		this.file = file;
-	}
-	public File getFile() {
-		return file;
-	}
-
-    public Trip parseJson() {
-		try {
-			ObjectMapper om = new ObjectMapper();
-			Trip t = om.readValue( file, Trip.class );
-			System.out.println( t );
-			return t;
-		} catch( IOException e ) {
-			e.printStackTrace();
-		}
-		return null;
-    }
+/**
+ * Interface for implementing file readers.
+ * This interface should be extended to create file readers. The file readers
+ * must return an instance of a Trip class once they have parsed the file.
+ *
+ * @author Stanimir Ivanov
+ * @version %I%, %G%
+ **/
+public interface FlightsReader {
+	/**
+	 * Sets a file to be parsed.
+	 * @param file An Instance of File that will be parsed. The file needs to exist.
+	 * @throws IOException Throws an exception if the file doesn't exist
+	 **/
+	public void setFile( File file ) throws IOException;
+	/**
+	 * This would return the file to parse.
+	 * @return File A File instance of the file to parse.
+	 **/
+	public File getFile();
+	/**
+	 * This parses the input file and creates a Trip object
+	 * out of it.
+	 * @return Trip A Trip instance of the parsed file.
+	 * @throws IOException Throws an exception if the parsing of the file fails.
+	 **/
+    public Trip parseFile() throws IOException;
 }
 
