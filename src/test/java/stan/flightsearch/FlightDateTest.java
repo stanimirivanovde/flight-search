@@ -71,6 +71,12 @@ public class FlightDateTest {
 			FlightDate date = new FlightDate( 1, 1, 2101 );
 		}
 
+	@Test
+		public void FlightDateToString() throws Exception {
+			FlightDate date = new FlightDate( 3, 12, 1984 );
+			Assert.assertEquals( date.toString(), "FlightDate: 1984-12-03" );
+		}
+
 	@After
 		public void tearDown() throws Exception {
 		}
