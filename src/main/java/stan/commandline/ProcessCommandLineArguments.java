@@ -1,4 +1,4 @@
-package stan.flightsearch;
+package stan.commandline;
 
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
@@ -12,6 +12,8 @@ import org.apache.commons.cli.ParseException;
 import java.io.File;
 import java.util.ArrayList;
 
+import stan.flightsearch.SupportedSitesEnum;
+
 public class ProcessCommandLineArguments {
 	private Options options = new Options();
 	private String[] args = null;
@@ -24,7 +26,7 @@ public class ProcessCommandLineArguments {
 
 	public ProcessCommandLineArguments( String[] args ) {
 		this.args = args;
-		createOptions();
+		this.createOptions();
 	}
 
 	private void createOptions() {
@@ -48,7 +50,6 @@ public class ProcessCommandLineArguments {
 		Option paginate = OptionBuilder.withArgName( "NUMBER OF PAGES" )
 							.withLongOpt( "paginate" )
 							.withDescription( "The number of pages in a page. When that number of pages has been opened the user will be prompted to press enter in order to continue with the next page. The default number is 50 pages." )
-							.isRequired()
 							.hasArgs( 1 )
 							.create( "p" );
 

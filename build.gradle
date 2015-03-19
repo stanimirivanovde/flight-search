@@ -4,12 +4,12 @@ apply plugin: 'jacoco'
 
 sourceCompatibility = 1.8
 version = '1.0'
-mainClassName = "stan.flightsearch.Flights"
+mainClassName = "stan.commandline.Flights"
 jar {
 	manifest {
 		attributes 'Implementation-Title': 'Flight Search',
 				   'Implementation-Version': version,
-				   'Main-Class': 'stan.flightsearch.Flights'
+				   'Main-Class': 'stan.commandline.Flights'
 	}
 }
 

@@ -1,6 +1,14 @@
-package stan.flightsearch;
+package stan.commandline;
 
 import java.util.ArrayList;
+
+import stan.flightsearch.FlightsReader;
+import stan.flightsearch.JsonReader;
+import stan.flightsearch.Trip;
+import stan.flightsearch.SiteFactory;
+import stan.flightsearch.URLOpener;
+import stan.flightsearch.Site;
+import stan.flightsearch.SupportedSitesEnum;
 
 public class Flights {
 	public static void main( String[] args ) {
