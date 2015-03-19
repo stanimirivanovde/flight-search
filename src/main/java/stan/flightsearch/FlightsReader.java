@@ -20,13 +20,13 @@ public interface FlightsReader {
 	public void setFile( File file ) throws IOException;
 	/**
 	 * This would return the file to parse.
-	 * @return File A File instance of the file to parse.
+	 * @return A File instance of the file to parse.
 	 **/
 	public File getFile();
 	/**
 	 * This parses the input file and creates a Trip object
 	 * out of it.
-	 * @return Trip A Trip instance of the parsed file.
+	 * @return A Trip instance of the parsed file.
 	 * @throws IOException Throws an exception if the parsing of the file fails.
 	 **/
     public Trip parseFile() throws IOException;

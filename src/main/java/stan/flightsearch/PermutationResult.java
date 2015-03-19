@@ -84,19 +84,19 @@ public class PermutationResult {
 	// Getters {{{
 	/**
 	 * Getter for the "from" flight destination string.
-	 * @return String A String object representing the "from" flight destination.
+	 * @return A String object representing the "from" flight destination.
 	 **/
 	public String getFrom() { return m_from; }
 
 	/**
 	 * Getter for the "to" flight destination string.
-	 * @return String A String object representing the "to" flight destination.
+	 * @return A String object representing the "to" flight destination.
 	 **/
 	public String getTo() { return m_to; }
 
 	/**
 	 * Getter for the flight date.
-	 * @return FlightDate A FlightDate object representing the flight date.
+	 * @return A FlightDate object representing the flight date.
 	 **/
 	public FlightDate getDate() { return m_date; }
 	// }}}
