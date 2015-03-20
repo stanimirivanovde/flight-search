@@ -1,0 +1,13 @@
+Trip:
+ TravelInfo:
+ [PHL]
+ [VAR]
+ [FlightDate: 2015-01-01]
+
+
+ TravelInfo:
+ [MAD]
+ [PHL]
+ [FlightDate: 2015-01-10]
+
+

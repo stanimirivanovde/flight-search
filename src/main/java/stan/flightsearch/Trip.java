@@ -49,8 +49,8 @@ public class Trip {
 	/**
 	 * Preferred Constructor.
 	 * Takes a depart and return TravelInfo objects and sets them to its private members.
-	 * @param depart A TravelInfo object containing the depart information.
-	 * @param returning A TravelInfo object containing the returning information.
+	 * @param depart A {@link TravelInfo TravelInfo} object containing the depart information.
+	 * @param returning A {@link TravelInfo TravelInfo} object containing the returning information.
 	 * @throws IllegalArgumentException If both the depart or returning TravelInfo objects are null.
 	 **/
 	public Trip( TravelInfo depart, TravelInfo returning ) {
@@ -66,23 +66,42 @@ public class Trip {
 	}
 
 	// Setters {{{
-	public void setDepart( TravelInfo i ) {
-		if( i == null ) {
+	/**
+	 * The setter for the depart travel information.
+	 * @param travelInfo A {@link TravelInfo TravelInfo} object representing departing information. This should be non-null.
+	 * @throws NullPointerException If the passed object is null.
+	 **/
+	public void setDepart( TravelInfo travelInfo ) {
+		if( travelInfo == null ) {
 			throw new NullPointerException( "The depart TravelInfo object is null." );
 		}
-		m_depart = i;
+		m_depart = travelInfo;
 	}
 
-	public void setReturning( TravelInfo i ) {
-		if( i == null ) {
+	/**
+	 * The setter for the returning travel information.
+	 * @param travelInfo A {@link TravelInfo TravelInfo} object representing returning information. This should be non-null.
+	 * @throws NullPointerException If the passed object is null.
+	 **/
+	public void setReturning( TravelInfo travelInfo ) {
+		if( travelInfo == null ) {
 			throw new NullPointerException( "The returning TravelInfo object is null." );
 		}
-		m_returning = i;
+		m_returning = travelInfo;
 	}
 	// }}}
 	
 	// Getters {{{
+	/**
+	 * Getter for the departing travel information.
+	 * @return A {@link TravelInfo TravelInfo} object representing the departing information.
+	 **/
 	public TravelInfo getDepart() { return m_depart; }
+
+	/**
+	 * Getter for the returning travel information.
+	 * @return A {@link TravelInfo TravelInfo} object representing the returning information.
+	 **/
 	public TravelInfo getReturning() { return m_returning; }
 	// }}}
 

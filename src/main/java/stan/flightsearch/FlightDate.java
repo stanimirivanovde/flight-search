@@ -38,8 +38,6 @@ public class FlightDate {
 		this.setYear( year );
 	}
 
-	// TODO: have setters for string and int individually
-
 	// Setters {{{
 	/**
 	 * The setter for the flight's day of the month.

@@ -1,0 +1,7 @@
+Trip:
+ TravelInfo:
+ [PHL]
+ [VAR]
+ [FlightDate: 2015-01-01]
+
+

@@ -1,0 +1,7 @@
+Trip:
+ TravelInfo:
+ [MAD]
+ [PHL]
+ [FlightDate: 2015-01-10]
+
+

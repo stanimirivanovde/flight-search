@@ -16,10 +16,11 @@ public class FlightPermutationsTest {
 			FlightPermutations permutations = new FlightPermutations( null );
 		}
 
-	@Test( expected=NullPointerException.class )
+	@Test
 		public void FlightPermutationsEmptyTravelInfo() {
 			FlightPermutations permutations = new FlightPermutations( new TravelInfo() );
 			List<PermutationResult> result = permutations.generate();
+			Assert.assertEquals( result.size(), 0 );
 		}
 
 	@Test
