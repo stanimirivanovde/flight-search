@@ -94,7 +94,9 @@ public class ProcessCommandLineArguments {
 			}
 			sites = getSupportedSites( cmd.getOptionValues( "s" ) );
 			generateOnly = cmd.hasOption( "g" );
-			numberOfPagesToOpenAtOnce = Integer.parseInt( cmd.getOptionValue( "p" ) );
+			if( cmd.hasOption( "p" ) ) {
+				numberOfPagesToOpenAtOnce = Integer.parseInt( cmd.getOptionValue( "p" ) );
+			}
 		} catch (ParseException e) {
 			System.err.println( e.getMessage() );
 			printHelp();

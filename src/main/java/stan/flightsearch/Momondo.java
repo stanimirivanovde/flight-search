@@ -4,32 +4,44 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Momondo implements Site {
-	private Trip trip;
-	private String baseUrl = "http://www.momondo.com";
-	private List<String> generatedUrls = new ArrayList<String>();
+	private Trip m_trip;
+	private String m_baseUrl = "http://www.momondo.com";
+	private List<String> m_generatedUrls = new ArrayList<String>();
+	private PermutationAlgorithm m_permutationAlgorithm;
 
-	// Constructors
+	/**
+	 * Default Constructor.
+	 **/
 	public Momondo() {}
-	public Momondo( Trip trip ) {
-		this.trip = trip;
+
+	/**
+	 * Preferred Constructor.
+	 * This will instantiate an instance of the class and set the necessary variables of the class.
+	 * @param trip A {@link Trip Trip} object containing the trip details.
+	 * @param permutationAlgorithm A {@link PermutationAlgorithm PermutationAlgorithm} object containing the permutation algorithm to be used.
+	 **/
+	public Momondo( Trip trip, PermutationAlgorithm permutationAlgorithm ) {
+		m_trip = trip;
+		m_permutationAlgorithm = permutationAlgorithm;
 	}
 
 	public void setTrip( Trip trip ) {
-		this.trip = trip;
+		m_trip = trip;
 	}
 	public void setBaseUrl( String url ) {
-		this.baseUrl = url;
+		m_baseUrl = url;
+	}
+	public void setPermutationAlgorithm( PermutationAlgorithm permutationAlgorithm ) {
+		m_permutationAlgorithm = permutationAlgorithm;
 	}
 
-	public String getBaseUrl() {
-		return baseUrl;
-	}
+	public String getBaseUrl() { return m_baseUrl; }
 
-	public List<String> getGeneratedUrls() { return generatedUrls; }
+	public List<String> getGeneratedUrls() { return m_generatedUrls; }
 
 	public void generateUrls() {
 		// A Momondo URL looks like this http://www.momondo.com/multicity/?Search=true&TripType=multi&SegNo=2&SO0=PHL&SD0=VAR&SDP0=11-07-2015&SO1=MAD&SD1=PHL&SDP1=08-08-2015&AD=1&TK=ECO&NA=false
-		if( trip.getDepart() != null && trip.getReturning() != null ) {
+		if( m_trip.getDepart() != null && m_trip.getReturning() != null ) {
 			generateURLsMultiCity();
 		} else {
 			generateURLsOneWay();
@@ -37,11 +49,11 @@ public class Momondo implements Site {
 	}
 
 	private void generateURLsMultiCity() {
-		FlightPermutations departPermutations = new FlightPermutations( trip.getDepart() );
-		FlightPermutations returningPermutations = new FlightPermutations( trip.getReturning() );
+		m_permutationAlgorithm.setTravelInfo( m_trip.getDepart() );
+		List<PermutationResult> departList = m_permutationAlgorithm.generate();
 
-		List<PermutationResult> departList = departPermutations.generate();
-		List<PermutationResult> returningList = returningPermutations.generate();
+		m_permutationAlgorithm.setTravelInfo( m_trip.getReturning() );
+		List<PermutationResult> returningList = m_permutationAlgorithm.generate();
 
 		System.out.println( "Number of total URLs: " + departList.size() * returningList.size() );
 
@@ -55,13 +67,13 @@ public class Momondo implements Site {
 				"?Search=true&TripType=multi" +
 				// Something I don't understand
 				"&SegNo=2", 
-				baseUrl
+				m_baseUrl
 		);
 		for( PermutationResult depart : departList ) {
 			for( PermutationResult returning : returningList ) {
 				String currentUrl = String.format( 
 						// Building the URL string
-						// Base URL
+						// Crafted URL
 						"%s"+
 						// First Origin
 						"&SO0=%s" +
@@ -90,7 +102,7 @@ public class Momondo implements Site {
 						returning.getDate().getYear()
 				);
 				System.out.println( "Generated the URL: " + currentUrl );
-				generatedUrls.add( currentUrl );
+				m_generatedUrls.add( currentUrl );
 			}
 		}
 	}
@@ -99,13 +111,13 @@ public class Momondo implements Site {
 	 // TODO: implement this!
 	/*
 		TravelInfo travelInfo;
-		if( trip.getDepart() != null ) {
-			travelInfo = trip.getDepart();
+		if( m_trip.getDepart() != null ) {
+			travelInfo = m_trip.getDepart();
 		} else {
-			travelInfo = trip.getReturning();
+			travelInfo = m_trip.getReturning();
 		}
 
-		FlightPermutations permutations = new FlightPermutations( travelInfo );
+		FlightPermutations permutations = new FlightPermutations( m_travelInfo );
 
 		List<PermutationResult> resultList = permutations.generate();
 
@@ -118,7 +130,7 @@ public class Momondo implements Site {
 					result.getDate()
 			);
 			System.out.println( "Generated the URL: " + currentUrl );
-			generatedUrls.add( currentUrl );
+			m_generatedUrls.add( currentUrl );
 		}
 	*/
 	}

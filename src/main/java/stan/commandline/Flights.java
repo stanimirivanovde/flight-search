@@ -9,6 +9,8 @@ import stan.flightsearch.SiteFactory;
 import stan.flightsearch.URLOpener;
 import stan.flightsearch.Site;
 import stan.flightsearch.SupportedSitesEnum;
+import stan.flightsearch.FlightPermutations;
+import stan.flightsearch.PermutationAlgorithm;
 
 public class Flights {
 	public static void main( String[] args ) {
@@ -24,8 +26,10 @@ public class Flights {
 			SiteFactory factory = new SiteFactory();
 			// This will hold the list of sites we want to search
 			ArrayList<Site> sites = new ArrayList<Site>();
+			// This will be the permutation algorithm to use
+			PermutationAlgorithm algorithm = new FlightPermutations();
 			for( SupportedSitesEnum s : argumentProcessor.getSites() ) {
-				sites.add( factory.createSite( s, trip ) );
+				sites.add( factory.createSite( s, trip, algorithm ) );
 			}
 
 			// Generate the URLs

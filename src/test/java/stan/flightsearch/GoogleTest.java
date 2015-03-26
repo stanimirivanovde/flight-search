@@ -7,7 +7,9 @@ import java.util.List;
 
 public class GoogleTest {
 	private Trip trip;
-	private TripGenerator tripGenerator = new TripGenerator();
+	private final TripGenerator tripGenerator = new TripGenerator();
+
+	//TODO: mock a permutationalgorithm instance and pass it along
 
 	@Before
 		public void setUp() throws Exception {

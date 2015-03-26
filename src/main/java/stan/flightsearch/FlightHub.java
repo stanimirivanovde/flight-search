@@ -4,33 +4,41 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class FlightHub implements Site {
-	private Trip trip;
-	private String baseUrl = "http://www.flighthub.com/flight/search?";
-	private List<String> generatedUrls = new ArrayList<String>();
+	private Trip m_trip;
+	private String m_baseUrl = "http://www.flighthub.com/flight/search?";
+	private List<String> m_generatedUrls = new ArrayList<String>();
+	private PermutationAlgorithm m_permutationAlgorithm;
 
-	// Constructors
+	/**
+	 * Default Constructor.
+	 **/
 	public FlightHub() {}
-	public FlightHub( Trip trip ) {
-		this.trip = trip;
+
+	/**
+	 * Preferred Constructor.
+	 * This will instantiate an instance of the class and set the necessary variables of the class.
+	 * @param trip A {@link Trip Trip} object containing the trip details.
+	 * @param permutationAlgorithm A {@link PermutationAlgorithm PermutationAlgorithm} object containing the permutation algorithm to be used.
+	 **/
+	public FlightHub( Trip trip, PermutationAlgorithm permutationAlgorithm ) {
+		m_trip = trip;
+		m_permutationAlgorithm = permutationAlgorithm;
 	}
 
 	public void setTrip( Trip trip ) {
-		this.trip = trip;
+		m_trip = trip;
 	}
 	public void setBaseUrl( String url ) {
-		this.baseUrl = url;
+		m_baseUrl = url;
 	}
 
-	public String getBaseUrl() {
-		return baseUrl;
-	}
-
-	public List<String> getGeneratedUrls() { return generatedUrls; }
+	public String getBaseUrl() { return m_baseUrl; }
+	public List<String> getGeneratedUrls() { return m_generatedUrls; }
 
 	public void generateUrls() {
 		// A FlightHub URL looks like this:
 		// http://www.flighthub.com/flight/search?seg0_from=PHL&seg0_date=2015-07-11&seg0_to=VAR&seg1_from=MAD&seg1_date=2015-08-08&seg1_to=PHL&num_adults=1&num_children=0&num_infants=0&num_infants_lap=0&seat_class=Economy
-		if( trip.getDepart() != null && trip.getReturning() != null ) {
+		if( m_trip.getDepart() != null && m_trip.getReturning() != null ) {
 			generateURLsMultiCity();
 		} else {
 			generateURLsOneWay();
@@ -38,11 +46,11 @@ public class FlightHub implements Site {
 	}
 
 	private void generateURLsMultiCity() {
-		FlightPermutations departPermutations = new FlightPermutations( trip.getDepart() );
-		FlightPermutations returningPermutations = new FlightPermutations( trip.getReturning() );
+		m_permutationAlgorithm.setTravelInfo( m_trip.getDepart() );
+		List<PermutationResult> departList = m_permutationAlgorithm.generate();
 
-		List<PermutationResult> departList = departPermutations.generate();
-		List<PermutationResult> returningList = returningPermutations.generate();
+		m_permutationAlgorithm.setTravelInfo( m_trip.getReturning() );
+		List<PermutationResult> returningList = m_permutationAlgorithm.generate();
 
 		System.out.println( "Number of total URLs: " + departList.size() * returningList.size() );
 		for( PermutationResult depart : departList ) {
@@ -64,7 +72,7 @@ public class FlightHub implements Site {
 						"&seg1_to=%s" +
 						// Final parameters
 						"&num_adults=1&num_children=0&num_infants=0&num_infants_lap=0&seat_class=Economy",
-						baseUrl,
+						m_baseUrl,
 						depart.getFrom().toLowerCase(),
 						depart.getDate().getYear(),
 						depart.getDate().getMonth(),
@@ -77,7 +85,7 @@ public class FlightHub implements Site {
 						returning.getTo().toLowerCase()
 				);
 				System.out.println( "Generated the URL: " + currentUrl );
-				generatedUrls.add( currentUrl );
+				m_generatedUrls.add( currentUrl );
 			}
 		}
 	}
