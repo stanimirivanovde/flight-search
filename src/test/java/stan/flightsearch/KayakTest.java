@@ -1,13 +1,17 @@
 package stan.flightsearch;
 
 import org.junit.*;
+import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class KayakTest {
-	private Trip trip;
-	private TripGenerator tripGenerator = new TripGenerator();
+	//private Trip trip;
+	//private TripGenerator tripGenerator = new TripGenerator();
+
+	private static final Trip mockedTrip = mock( Trip.class );
+	private static final PermutationAlgorithm mockedPermutationAlgorithm = mock( PermutationAlgorithm.class );
 
 	@Before
 		public void setUp() throws Exception {
@@ -16,9 +20,14 @@ public class KayakTest {
 	@Test
 		public void kayakMultiCityTripConstructor() throws Exception {
 			// Generate the trip
-			trip = tripGenerator.generateMultiCityTrip();
+	//		trip = tripGenerator.generateMultiCityTrip();
 
-			Site kayak = new Kayak( trip );
+			// Stub the mocked permutation algorithm with the result we expect.
+			when( mockedPermutationAlgorithm.generate() )
+				.thenReturn( Arrays.asList( new PermutationResult( "PHL", "VAR", new FlightDate( 03, 12, 1984 ) ) ) )
+				.thenReturn( Arrays.asList( new PermutationResult( "MAD", "PHL", new FlightDate( 24, 12, 1984 ) ) ) );
+
+			Site kayak = new Kayak( mockedTrip, mockedPermutationAlgorithm );
 			kayak.generateUrls();
 			List<String> urls = kayak.getGeneratedUrls();
 			// Should get only one url
@@ -29,7 +38,12 @@ public class KayakTest {
 	@Test
 		public void kayakMultiCityTripSetters() throws Exception {
 			// Generate the trip
-			trip = tripGenerator.generateMultiCityTrip();
+//			trip = tripGenerator.generateMultiCityTrip();
+
+			// Stub the mocked permutation algorithm with the result we expect.
+			when( mockedPermutationAlgorithm.generate() )
+				.thenReturn( Arrays.asList( new PermutationResult( "PHL", "VAR", new FlightDate( 03, 12, 1984 ) ) ) )
+				.thenReturn( Arrays.asList( new PermutationResult( "MAD", "PHL", new FlightDate( 24, 12, 1984 ) ) ) );
 
 			Site kayak = new Kayak();
 
@@ -38,8 +52,10 @@ public class KayakTest {
 			kayak.setBaseUrl( baseUrl );
 			Assert.assertEquals( kayak.getBaseUrl(), baseUrl );
 
+			// Set the permutation algorithm
+			kayak.setPermutationAlgorithm( mockedPermutationAlgorithm );
 			// Set the trip
-			kayak.setTrip( trip );
+			kayak.setTrip( mockedTrip );
 
 			kayak.generateUrls();
 			List<String> urls = kayak.getGeneratedUrls();
@@ -53,9 +69,13 @@ public class KayakTest {
 			// Generate the trip
 			// This denotes weather the one way trip is configured as departing or returning.
 			boolean isDeparting = true;
-			trip = tripGenerator.generateOneWayTrip( isDeparting );
+//			trip = tripGenerator.generateOneWayTrip( isDeparting );
 
-			Site kayak = new Kayak( trip );
+			// Stub the mocked permutation algorithm with the result we expect.
+			when( mockedPermutationAlgorithm.generate() )
+				.thenReturn( Arrays.asList( new PermutationResult( "PHL", "VAR", new FlightDate( 03, 12, 1984 ) ) ) );
+
+			Site kayak = new Kayak( mockedTrip, mockedPermutationAlgorithm );
 			kayak.generateUrls();
 			List<String> urls = kayak.getGeneratedUrls();
 			// Should get only one url
@@ -68,9 +88,13 @@ public class KayakTest {
 			// Generate the trip
 			// This denotes weather the one way trip is configured as departing or returning.
 			boolean isDeparting = false;
-			trip = tripGenerator.generateOneWayTrip( isDeparting );
+//			trip = tripGenerator.generateOneWayTrip( isDeparting );
 
-			Site kayak = new Kayak( trip );
+			// Stub the mocked permutation algorithm with the result we expect.
+			when( mockedPermutationAlgorithm.generate() )
+				.thenReturn( Arrays.asList( new PermutationResult( "PHL", "VAR", new FlightDate( 03, 12, 1984 ) ) ) );
+
+			Site kayak = new Kayak( mockedTrip, mockedPermutationAlgorithm );
 			kayak.generateUrls();
 			List<String> urls = kayak.getGeneratedUrls();
 			// Should get only one url

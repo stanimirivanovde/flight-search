@@ -1,13 +1,17 @@
 package stan.flightsearch;
 
 import org.junit.*;
+import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class HipmunkTest {
-	private Trip trip;
-	private TripGenerator tripGenerator = new TripGenerator();
+//	private Trip trip;
+//	private TripGenerator tripGenerator = new TripGenerator();
+
+	private static final Trip mockedTrip = mock( Trip.class );
+	private static final PermutationAlgorithm mockedPermutationAlgorithm = mock( PermutationAlgorithm.class );
 
 	@Before
 		public void setUp() throws Exception {
@@ -16,9 +20,14 @@ public class HipmunkTest {
 	@Test
 		public void multiCityTripConstructor() throws Exception {
 			// Generate the trip
-			trip = tripGenerator.generateMultiCityTrip();
+//			trip = tripGenerator.generateMultiCityTrip();
 
-			Site hipmunk = new Hipmunk( trip );
+			// Stub the mocked permutation algorithm with the result we expect.
+			when( mockedPermutationAlgorithm.generate() )
+				.thenReturn( Arrays.asList( new PermutationResult( "PHL", "VAR", new FlightDate( 03, 12, 1984 ) ) ) )
+				.thenReturn( Arrays.asList( new PermutationResult( "MAD", "PHL", new FlightDate( 24, 12, 1984 ) ) ) );
+
+			Site hipmunk = new Hipmunk( mockedTrip, mockedPermutationAlgorithm );
 			hipmunk.generateUrls();
 			List<String> urls = hipmunk.getGeneratedUrls();
 			// Should get only one url
@@ -29,7 +38,12 @@ public class HipmunkTest {
 	@Test
 		public void multiCityTripSetters() throws Exception {
 			// Generate the trip
-			trip = tripGenerator.generateMultiCityTrip();
+//			trip = tripGenerator.generateMultiCityTrip();
+
+			// Stub the mocked permutation algorithm with the result we expect.
+			when( mockedPermutationAlgorithm.generate() )
+				.thenReturn( Arrays.asList( new PermutationResult( "PHL", "VAR", new FlightDate( 03, 12, 1984 ) ) ) )
+				.thenReturn( Arrays.asList( new PermutationResult( "MAD", "PHL", new FlightDate( 24, 12, 1984 ) ) ) );
 
 			Site hipmunk = new Hipmunk();
 
@@ -38,8 +52,10 @@ public class HipmunkTest {
 			hipmunk.setBaseUrl( baseUrl );
 			Assert.assertEquals( hipmunk.getBaseUrl(), baseUrl );
 
+			// Set the permutation algorithm
+			hipmunk.setPermutationAlgorithm( mockedPermutationAlgorithm );
 			// Set the trip
-			hipmunk.setTrip( trip );
+			hipmunk.setTrip( mockedTrip );
 
 			hipmunk.generateUrls();
 			List<String> urls = hipmunk.getGeneratedUrls();
@@ -54,9 +70,14 @@ public class HipmunkTest {
 			// Generate the trip
 			// This denotes weather the one way trip is configured as departing or returning.
 			boolean isDeparting = true;
-			trip = tripGenerator.generateOneWayTrip( isDeparting );
+//			trip = tripGenerator.generateOneWayTrip( isDeparting );
 
-			Site hipmunk = new Hipmunk( trip );
+			// Stub the mocked permutation algorithm with the result we expect.
+			when( mockedPermutationAlgorithm.generate() )
+				.thenReturn( Arrays.asList( new PermutationResult( "PHL", "VAR", new FlightDate( 03, 12, 1984 ) ) ) );
+
+			//Site hipmunk = new Hipmunk( trip );
+			Site hipmunk = new Hipmunk( mockedTrip, mockedPermutationAlgorithm );
 			hipmunk.generateUrls();
 			List<String> urls = hipmunk.getGeneratedUrls();
 			// Should get only one url
@@ -70,9 +91,14 @@ public class HipmunkTest {
 			// Generate the trip
 			// This denotes weather the one way trip is configured as departing or returning.
 			boolean isDeparting = false;
-			trip = tripGenerator.generateOneWayTrip( isDeparting );
+			//trip = tripGenerator.generateOneWayTrip( isDeparting );
 
-			Site hipmunk = new Hipmunk( trip );
+			// Stub the mocked permutation algorithm with the result we expect.
+			when( mockedPermutationAlgorithm.generate() )
+				.thenReturn( Arrays.asList( new PermutationResult( "PHL", "VAR", new FlightDate( 03, 12, 1984 ) ) ) );
+
+			Site hipmunk = new Hipmunk( mockedTrip, mockedPermutationAlgorithm );
+
 			hipmunk.generateUrls();
 			List<String> urls = hipmunk.getGeneratedUrls();
 			// Should get only one url

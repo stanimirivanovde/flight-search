@@ -1,15 +1,22 @@
 package stan.flightsearch;
 
 import org.junit.*;
+import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class GoogleTest {
-	private Trip trip;
-	private final TripGenerator tripGenerator = new TripGenerator();
+//	private Trip trip;
+//	private static final TripGenerator tripGenerator = new TripGenerator();
+	private static final Trip mockedTrip = mock( Trip.class );
+	private static final PermutationAlgorithm mockedPermutationAlgorithm = mock( PermutationAlgorithm.class );
 
 	//TODO: mock a permutationalgorithm instance and pass it along
+
+	@BeforeClass
+		public void setUpTestCase() throws Exception {
+		}
 
 	@Before
 		public void setUp() throws Exception {
@@ -18,9 +25,14 @@ public class GoogleTest {
 	@Test
 		public void multiCityTripConstructor() throws Exception {
 			// Generate the trip
-			trip = tripGenerator.generateMultiCityTrip();
+//			trip = tripGenerator.generateMultiCityTrip();
 
-			Site google = new Google( trip );
+			// Stub the mocked permutation algorithm with the result we expect.
+			when( mockedPermutationAlgorithm.generate() )
+				.thenReturn( Arrays.asList( new PermutationResult( "PHL", "VAR", new FlightDate( 03, 12, 1984 ) ) ) )
+				.thenReturn( Arrays.asList( new PermutationResult( "MAD", "PHL", new FlightDate( 24, 12, 1984 ) ) ) );
+
+			Site google = new Google( mockedTrip, mockedPermutationAlgorithm );
 			google.generateUrls();
 			List<String> urls = google.getGeneratedUrls();
 			// Should get only one url
@@ -31,7 +43,12 @@ public class GoogleTest {
 	@Test
 		public void multiCityTripSetters() throws Exception {
 			// Generate the trip
-			trip = tripGenerator.generateMultiCityTrip();
+//			trip = tripGenerator.generateMultiCityTrip();
+
+			// Stub the mocked permutation algorithm with the result we expect.
+			when( mockedPermutationAlgorithm.generate() )
+				.thenReturn( Arrays.asList( new PermutationResult( "PHL", "VAR", new FlightDate( 03, 12, 1984 ) ) ) )
+				.thenReturn( Arrays.asList( new PermutationResult( "MAD", "PHL", new FlightDate( 24, 12, 1984 ) ) ) );
 
 			Site google = new Google();
 
@@ -40,8 +57,10 @@ public class GoogleTest {
 			google.setBaseUrl( baseUrl );
 			Assert.assertEquals( google.getBaseUrl(), baseUrl );
 
+			// Set the permutation algorithm
+			google.setPermutationAlgorithm( mockedPermutationAlgorithm );
 			// Set the trip
-			google.setTrip( trip );
+			google.setTrip( mockedTrip );
 
 			google.generateUrls();
 			List<String> urls = google.getGeneratedUrls();
@@ -56,9 +75,13 @@ public class GoogleTest {
 			// Generate the trip
 			// This denotes weather the one way trip is configured as departing or returning.
 			boolean isDeparting = true;
-			trip = tripGenerator.generateOneWayTrip( isDeparting );
+//			trip = tripGenerator.generateOneWayTrip( isDeparting );
 
-			Site google = new Google( trip );
+			// Stub the mocked permutation algorithm with the result we expect.
+			when( mockedPermutationAlgorithm.generate() )
+				.thenReturn( Arrays.asList( new PermutationResult( "PHL", "VAR", new FlightDate( 03, 12, 1984 ) ) ) );
+
+			Site google = new Google( mockedTrip, mockedPermutationAlgorithm );
 			google.generateUrls();
 			List<String> urls = google.getGeneratedUrls();
 			// Should get only one url
@@ -72,9 +95,13 @@ public class GoogleTest {
 			// Generate the trip
 			// This denotes weather the one way trip is configured as departing or returning.
 			boolean isDeparting = false;
-			trip = tripGenerator.generateOneWayTrip( isDeparting );
+//			trip = tripGenerator.generateOneWayTrip( isDeparting );
 
-			Site google = new Google( trip );
+			// Stub the mocked permutation algorithm with the result we expect.
+			when( mockedPermutationAlgorithm.generate() )
+				.thenReturn( Arrays.asList( new PermutationResult( "PHL", "VAR", new FlightDate( 03, 12, 1984 ) ) ) );
+
+			Site google = new Google( mockedTrip, mockedPermutationAlgorithm );
 			google.generateUrls();
 			List<String> urls = google.getGeneratedUrls();
 			// Should get only one url
@@ -84,6 +111,10 @@ public class GoogleTest {
 
 	@After
 		public void tearDown() throws Exception {
+		}
+
+	@AfterClass
+		public void tearDownTestCase() throws Exception {
 		}
 }
 

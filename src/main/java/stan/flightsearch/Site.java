@@ -28,9 +28,16 @@ public interface Site {
 	 * Sets the Trip details to be used for the site.
 	 * Based on the supplied permutation algorithm all trip details will be
 	 * permuted.
-	 * @param trip A Trip object containing the trip details.
+	 * @param trip A {@link Trip Trip} object containing the trip details.
 	 **/
 	public void setTrip( Trip trip );
+
+	/**
+	 * Sets the permutation algorithm to use when creating all combinations from the
+	 * provided trip.
+	 * @param permutationAlgorithm A {@link PermutationAlgorithm PermutationAlgorithm} object of the permutation algorithm to use.
+	 **/
+	public void setPermutationAlgorithm( PermutationAlgorithm permutationAlgorithm );
 
 	/**
 	 * Returns the current base URL for the site.

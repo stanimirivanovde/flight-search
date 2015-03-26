@@ -1,13 +1,16 @@
 package stan.flightsearch;
 
 import org.junit.*;
+import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class MomondoTest {
-	private Trip trip;
-	private TripGenerator tripGenerator = new TripGenerator();
+//	private Trip trip;
+//	private TripGenerator tripGenerator = new TripGenerator();
+	private static final Trip mockedTrip = mock( Trip.class );
+	private static final PermutationAlgorithm mockedPermutationAlgorithm = mock( PermutationAlgorithm.class );
 
 	@Before
 		public void setUp() throws Exception {
@@ -16,9 +19,14 @@ public class MomondoTest {
 	@Test
 		public void multiCityTripConstructor() throws Exception {
 			// Generate the trip
-			trip = tripGenerator.generateMultiCityTrip();
+		//	trip = tripGenerator.generateMultiCityTrip();
 
-			Site momondo = new Momondo( trip );
+			// Stub the mocked permutation algorithm with the result we expect.
+			when( mockedPermutationAlgorithm.generate() )
+				.thenReturn( Arrays.asList( new PermutationResult( "PHL", "VAR", new FlightDate( 03, 12, 1984 ) ) ) )
+				.thenReturn( Arrays.asList( new PermutationResult( "MAD", "PHL", new FlightDate( 24, 12, 1984 ) ) ) );
+
+			Site momondo = new Momondo( mockedTrip, mockedPermutationAlgorithm );
 			momondo.generateUrls();
 			List<String> urls = momondo.getGeneratedUrls();
 			// Should get only one url
@@ -29,7 +37,12 @@ public class MomondoTest {
 	@Test
 		public void multiCityTripSetters() throws Exception {
 			// Generate the trip
-			trip = tripGenerator.generateMultiCityTrip();
+		//	trip = tripGenerator.generateMultiCityTrip();
+
+			// Stub the mocked permutation algorithm with the result we expect.
+			when( mockedPermutationAlgorithm.generate() )
+				.thenReturn( Arrays.asList( new PermutationResult( "PHL", "VAR", new FlightDate( 03, 12, 1984 ) ) ) )
+				.thenReturn( Arrays.asList( new PermutationResult( "MAD", "PHL", new FlightDate( 24, 12, 1984 ) ) ) );
 
 			Site momondo = new Momondo();
 
@@ -38,8 +51,10 @@ public class MomondoTest {
 			momondo.setBaseUrl( baseUrl );
 			Assert.assertEquals( momondo.getBaseUrl(), baseUrl );
 
+			// Set the permutation algorithm
+			momondo.setPermutationAlgorithm( mockedPermutationAlgorithm );
 			// Set the trip
-			momondo.setTrip( trip );
+			momondo.setTrip( mockedTrip );
 
 			momondo.generateUrls();
 			List<String> urls = momondo.getGeneratedUrls();
@@ -54,9 +69,13 @@ public class MomondoTest {
 			// Generate the trip
 			// This denotes weather the one way trip is configured as departing or returning.
 			boolean isDeparting = true;
-			trip = tripGenerator.generateOneWayTrip( isDeparting );
+		//	trip = tripGenerator.generateOneWayTrip( isDeparting );
 
-			Site momondo = new Momondo( trip );
+			// Stub the mocked permutation algorithm with the result we expect.
+			when( mockedPermutationAlgorithm.generate() )
+				.thenReturn( Arrays.asList( new PermutationResult( "PHL", "VAR", new FlightDate( 03, 12, 1984 ) ) ) );
+
+			Site momondo = new Momondo( mockedTrip, mockedPermutationAlgorithm );
 			momondo.generateUrls();
 			List<String> urls = momondo.getGeneratedUrls();
 			// Should get only one url
@@ -70,9 +89,13 @@ public class MomondoTest {
 			// Generate the trip
 			// This denotes weather the one way trip is configured as departing or returning.
 			boolean isDeparting = false;
-			trip = tripGenerator.generateOneWayTrip( isDeparting );
+		//	trip = tripGenerator.generateOneWayTrip( isDeparting );
 
-			Site momondo = new Momondo( trip );
+			// Stub the mocked permutation algorithm with the result we expect.
+			when( mockedPermutationAlgorithm.generate() )
+				.thenReturn( Arrays.asList( new PermutationResult( "PHL", "VAR", new FlightDate( 03, 12, 1984 ) ) ) );
+
+			Site momondo = new Momondo( mockedTrip, mockedPermutationAlgorithm );
 			momondo.generateUrls();
 			List<String> urls = momondo.getGeneratedUrls();
 			// Should get only one url

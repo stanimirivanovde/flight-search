@@ -31,6 +31,9 @@ public class Kayak implements Site {
 	public void setBaseUrl( String url ) {
 		m_baseUrl = url;
 	}
+	public void setPermutationAlgorithm( PermutationAlgorithm permutationAlgorithm ) {
+		m_permutationAlgorithm = permutationAlgorithm;
+	}
 
 	public String getBaseUrl() { return m_baseUrl; }
 	public List<String> getGeneratedUrls() { return m_generatedUrls; }
