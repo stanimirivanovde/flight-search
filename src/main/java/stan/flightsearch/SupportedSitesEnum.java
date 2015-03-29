@@ -1,5 +1,5 @@
 package stan.flightsearch;
 
 public enum SupportedSitesEnum {
-	KAYAK, GOOGLE, MOMONDO, HIPMUNK, FLIGHTHUB
+	UNKNOWN, KAYAK, GOOGLE, MOMONDO, HIPMUNK, FLIGHTHUB
 }

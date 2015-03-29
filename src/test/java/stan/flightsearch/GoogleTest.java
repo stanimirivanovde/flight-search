@@ -7,32 +7,28 @@ import java.util.Arrays;
 import java.util.List;
 
 public class GoogleTest {
-//	private Trip trip;
-//	private static final TripGenerator tripGenerator = new TripGenerator();
-	private static final Trip mockedTrip = mock( Trip.class );
-	private static final PermutationAlgorithm mockedPermutationAlgorithm = mock( PermutationAlgorithm.class );
-
-	//TODO: mock a permutationalgorithm instance and pass it along
-
-	@BeforeClass
-		public void setUpTestCase() throws Exception {
-		}
+	private Trip m_mockedTrip;
+	private PermutationAlgorithm m_mockedPermutationAlgorithm;
 
 	@Before
 		public void setUp() throws Exception {
+			// Set up our mocks before every test.
+			m_mockedTrip = mock( Trip.class );
+			m_mockedPermutationAlgorithm = mock( PermutationAlgorithm.class );
 		}
 
 	@Test
 		public void multiCityTripConstructor() throws Exception {
-			// Generate the trip
-//			trip = tripGenerator.generateMultiCityTrip();
+			// Stub the mocked Trip methods to return empty but valid TravelInfo objects.
+			when( m_mockedTrip.getDepart() ).thenReturn( new TravelInfo() );
+			when( m_mockedTrip.getReturning() ).thenReturn( new TravelInfo() );
 
 			// Stub the mocked permutation algorithm with the result we expect.
-			when( mockedPermutationAlgorithm.generate() )
+			when( m_mockedPermutationAlgorithm.generate() )
 				.thenReturn( Arrays.asList( new PermutationResult( "PHL", "VAR", new FlightDate( 03, 12, 1984 ) ) ) )
 				.thenReturn( Arrays.asList( new PermutationResult( "MAD", "PHL", new FlightDate( 24, 12, 1984 ) ) ) );
 
-			Site google = new Google( mockedTrip, mockedPermutationAlgorithm );
+			Site google = new Google( m_mockedTrip, m_mockedPermutationAlgorithm );
 			google.generateUrls();
 			List<String> urls = google.getGeneratedUrls();
 			// Should get only one url
@@ -42,11 +38,12 @@ public class GoogleTest {
 
 	@Test
 		public void multiCityTripSetters() throws Exception {
-			// Generate the trip
-//			trip = tripGenerator.generateMultiCityTrip();
+			// Stub the mocked Trip methods to return empty but valid TravelInfo objects.
+			when( m_mockedTrip.getDepart() ).thenReturn( new TravelInfo() );
+			when( m_mockedTrip.getReturning() ).thenReturn( new TravelInfo() );
 
 			// Stub the mocked permutation algorithm with the result we expect.
-			when( mockedPermutationAlgorithm.generate() )
+			when( m_mockedPermutationAlgorithm.generate() )
 				.thenReturn( Arrays.asList( new PermutationResult( "PHL", "VAR", new FlightDate( 03, 12, 1984 ) ) ) )
 				.thenReturn( Arrays.asList( new PermutationResult( "MAD", "PHL", new FlightDate( 24, 12, 1984 ) ) ) );
 
@@ -58,9 +55,9 @@ public class GoogleTest {
 			Assert.assertEquals( google.getBaseUrl(), baseUrl );
 
 			// Set the permutation algorithm
-			google.setPermutationAlgorithm( mockedPermutationAlgorithm );
+			google.setPermutationAlgorithm( m_mockedPermutationAlgorithm );
 			// Set the trip
-			google.setTrip( mockedTrip );
+			google.setTrip( m_mockedTrip );
 
 			google.generateUrls();
 			List<String> urls = google.getGeneratedUrls();
@@ -72,16 +69,14 @@ public class GoogleTest {
 	@Ignore( "enable this when the functionality is implemented" )
 	@Test
 		public void oneWayDepart() throws Exception {
-			// Generate the trip
-			// This denotes weather the one way trip is configured as departing or returning.
-			boolean isDeparting = true;
-//			trip = tripGenerator.generateOneWayTrip( isDeparting );
+			// Stub the mocked Trip methods to return empty but valid TravelInfo objects.
+			when( m_mockedTrip.getDepart() ).thenReturn( new TravelInfo() );
 
 			// Stub the mocked permutation algorithm with the result we expect.
-			when( mockedPermutationAlgorithm.generate() )
+			when( m_mockedPermutationAlgorithm.generate() )
 				.thenReturn( Arrays.asList( new PermutationResult( "PHL", "VAR", new FlightDate( 03, 12, 1984 ) ) ) );
 
-			Site google = new Google( mockedTrip, mockedPermutationAlgorithm );
+			Site google = new Google( m_mockedTrip, m_mockedPermutationAlgorithm );
 			google.generateUrls();
 			List<String> urls = google.getGeneratedUrls();
 			// Should get only one url
@@ -92,16 +87,14 @@ public class GoogleTest {
 	@Ignore( "enable this when the functionality is implemented" )
 	@Test
 		public void oneWayReturn() throws Exception {
-			// Generate the trip
-			// This denotes weather the one way trip is configured as departing or returning.
-			boolean isDeparting = false;
-//			trip = tripGenerator.generateOneWayTrip( isDeparting );
+			// Stub the mocked Trip methods to return empty but valid TravelInfo objects.
+			when( m_mockedTrip.getReturning() ).thenReturn( new TravelInfo() );
 
 			// Stub the mocked permutation algorithm with the result we expect.
-			when( mockedPermutationAlgorithm.generate() )
+			when( m_mockedPermutationAlgorithm.generate() )
 				.thenReturn( Arrays.asList( new PermutationResult( "PHL", "VAR", new FlightDate( 03, 12, 1984 ) ) ) );
 
-			Site google = new Google( mockedTrip, mockedPermutationAlgorithm );
+			Site google = new Google( m_mockedTrip, m_mockedPermutationAlgorithm );
 			google.generateUrls();
 			List<String> urls = google.getGeneratedUrls();
 			// Should get only one url
@@ -111,10 +104,6 @@ public class GoogleTest {
 
 	@After
 		public void tearDown() throws Exception {
-		}
-
-	@AfterClass
-		public void tearDownTestCase() throws Exception {
 		}
 }
 

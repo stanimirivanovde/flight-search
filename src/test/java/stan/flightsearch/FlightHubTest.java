@@ -7,29 +7,29 @@ import java.util.Arrays;
 import java.util.List;
 
 public class FlightHubTest {
-//	private Trip trip;
-//	private TripGenerator tripGenerator = new TripGenerator();
-	private static final Trip mockedTrip = mock( Trip.class );
-	private static final PermutationAlgorithm mockedPermutationAlgorithm = mock( PermutationAlgorithm.class );
+	private Trip m_mockedTrip;
+	private PermutationAlgorithm m_mockedPermutationAlgorithm;
 
 	@Before
 		public void setUp() throws Exception {
+			m_mockedTrip = mock( Trip.class );
+			m_mockedPermutationAlgorithm = mock( PermutationAlgorithm.class );
 		}
 
 	@Test
 		public void multiCityTripConstructor() throws Exception {
-			// Generate the trip
-	//		trip = tripGenerator.generateMultiCityTrip();
+			// Stub the mocked Trip methods to return empty but valid TravelInfo objects.
+			when( m_mockedTrip.getDepart() ).thenReturn( new TravelInfo() );
+			when( m_mockedTrip.getReturning() ).thenReturn( new TravelInfo() );
 
 			// Stub the mocked permutation algorithm with the result we expect.
-			when( mockedPermutationAlgorithm.generate() )
+			when( m_mockedPermutationAlgorithm.generate() )
 				.thenReturn( Arrays.asList( new PermutationResult( "PHL", "VAR", new FlightDate( 03, 12, 1984 ) ) ) )
 				.thenReturn( Arrays.asList( new PermutationResult( "MAD", "PHL", new FlightDate( 24, 12, 1984 ) ) ) );
 
-			Site flightHub = new FlightHub( mockedTrip, mockedPermutationAlgorithm );
+			Site flightHub = new FlightHub( m_mockedTrip, m_mockedPermutationAlgorithm );
 			flightHub.generateUrls();
 			List<String> urls = flightHub.getGeneratedUrls();
-			System.out.println( "The urls: " + urls );
 			// Should get only one url
 			Assert.assertEquals( urls.size(), 1 );
 			Assert.assertEquals( urls.get( 0 ), "http://www.flighthub.com/flight/search?seg0_from=phl&seg0_date=1984-12-03&seg0_to=var&seg1_from=mad&seg1_date=1984-12-24&seg1_to=phl&num_adults=1&num_children=0&num_infants=0&num_infants_lap=0&seat_class=Economy" );
@@ -37,11 +37,12 @@ public class FlightHubTest {
 
 	@Test
 		public void multiCityTripSetters() throws Exception {
-			// Generate the trip
-		//	trip = tripGenerator.generateMultiCityTrip();
+			// Stub the mocked Trip methods to return empty but valid TravelInfo objects.
+			when( m_mockedTrip.getDepart() ).thenReturn( new TravelInfo() );
+			when( m_mockedTrip.getReturning() ).thenReturn( new TravelInfo() );
 
 			// Stub the mocked permutation algorithm with the result we expect.
-			when( mockedPermutationAlgorithm.generate() )
+			when( m_mockedPermutationAlgorithm.generate() )
 				.thenReturn( Arrays.asList( new PermutationResult( "PHL", "VAR", new FlightDate( 03, 12, 1984 ) ) ) )
 				.thenReturn( Arrays.asList( new PermutationResult( "MAD", "PHL", new FlightDate( 24, 12, 1984 ) ) ) );
 
@@ -53,9 +54,9 @@ public class FlightHubTest {
 			Assert.assertEquals( flightHub.getBaseUrl(), baseUrl );
 
 			// Set the permutation algorithm
-			flightHub.setPermutationAlgorithm( mockedPermutationAlgorithm );
+			flightHub.setPermutationAlgorithm( m_mockedPermutationAlgorithm );
 			// Set the trip
-			flightHub.setTrip( mockedTrip );
+			flightHub.setTrip( m_mockedTrip );
 
 			flightHub.generateUrls();
 			List<String> urls = flightHub.getGeneratedUrls();
@@ -67,16 +68,14 @@ public class FlightHubTest {
 	@Ignore( "enable this when the functionality is implemented" )
 	@Test
 		public void oneWayDepart() throws Exception {
-			// Generate the trip
-			// This denotes weather the one way trip is configured as departing or returning.
-			boolean isDeparting = true;
-		//	trip = tripGenerator.generateOneWayTrip( isDeparting );
+			// Stub the mocked Trip methods to return empty but valid TravelInfo objects.
+			when( m_mockedTrip.getDepart() ).thenReturn( new TravelInfo() );
 
 			// Stub the mocked permutation algorithm with the result we expect.
-			when( mockedPermutationAlgorithm.generate() )
+			when( m_mockedPermutationAlgorithm.generate() )
 				.thenReturn( Arrays.asList( new PermutationResult( "PHL", "VAR", new FlightDate( 03, 12, 1984 ) ) ) );
 
-			Site flightHub = new FlightHub( mockedTrip, mockedPermutationAlgorithm );
+			Site flightHub = new FlightHub( m_mockedTrip, m_mockedPermutationAlgorithm );
 			flightHub.generateUrls();
 			List<String> urls = flightHub.getGeneratedUrls();
 			// Should get only one url
@@ -87,16 +86,14 @@ public class FlightHubTest {
 	@Ignore( "enable this when the functionality is implemented" )
 	@Test
 		public void oneWayReturn() throws Exception {
-			// Generate the trip
-			// This denotes weather the one way trip is configured as departing or returning.
-			boolean isDeparting = false;
-		//	trip = tripGenerator.generateOneWayTrip( isDeparting );
+			// Stub the mocked Trip methods to return empty but valid TravelInfo objects.
+			when( m_mockedTrip.getReturning() ).thenReturn( new TravelInfo() );
 
 			// Stub the mocked permutation algorithm with the result we expect.
-			when( mockedPermutationAlgorithm.generate() )
+			when( m_mockedPermutationAlgorithm.generate() )
 				.thenReturn( Arrays.asList( new PermutationResult( "PHL", "VAR", new FlightDate( 03, 12, 1984 ) ) ) );
 
-			Site flightHub = new FlightHub( mockedTrip, mockedPermutationAlgorithm );
+			Site flightHub = new FlightHub( m_mockedTrip, m_mockedPermutationAlgorithm );
 			flightHub.generateUrls();
 			List<String> urls = flightHub.getGeneratedUrls();
 			// Should get only one url

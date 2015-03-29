@@ -23,6 +23,7 @@ public class ProcessCommandLineArguments {
 	private ArrayList<SupportedSitesEnum> sites;
 	private boolean generateOnly = false;
 	private int numberOfPagesToOpenAtOnce = 50;
+	private int sleepTime = 800;
 
 	public ProcessCommandLineArguments( String[] args ) {
 		this.args = args;
@@ -52,12 +53,18 @@ public class ProcessCommandLineArguments {
 							.withDescription( "The number of pages in a page. When that number of pages has been opened the user will be prompted to press enter in order to continue with the next page. The default number is 50 pages." )
 							.hasArgs( 1 )
 							.create( "p" );
+		Option sleep = OptionBuilder.withArgName( "TIME TO SLEEP" )
+							.withLongOpt( "sleep-time" )
+							.withDescription( "The number of seconds to sleep between each opened URL in miliseconds. The default is 800 miliseconds." )
+							.hasArgs( 1 )
+							.create( "t" );
 
 		options.addOption( help );
 		options.addOption( site );
 		options.addOption( file );
 		options.addOption( generate );
 		options.addOption( paginate );
+		options.addOption( sleep );
 	}
 
 	private void printHelp() {
@@ -107,5 +114,6 @@ public class ProcessCommandLineArguments {
 	public ArrayList<SupportedSitesEnum> getSites() { return sites; }
 	public boolean getGenerateOnly() { return generateOnly; }
 	public int getNumberOfPagesToOpenAtOnce() { return numberOfPagesToOpenAtOnce; }
+	public int getSleepTime() { return sleepTime; }
 }
 

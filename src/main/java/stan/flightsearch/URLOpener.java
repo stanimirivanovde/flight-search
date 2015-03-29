@@ -20,53 +20,50 @@ import java.io.IOException;
  * @version %I%, %G%
  **/
 public class URLOpener {
+	//! The urls to open
 	private List<String> m_urls;
-	private int m_sleepTime = 1000;
-	private int m_numberOfPagesToOpenAtOnce = 50;
-
-	/**
-	 * Default Constructor.
-	 **/
-	public URLOpener() {}
+	//! The time to sleep between openeing each URL
+	private int m_sleepTime;
+	//! The number of URLs to open at once before pausing.
+	private int m_numberOfPagesToOpenAtOnce;
+	//! This is the Desktop object used to open URLs in the default system browser.
+	private final Desktop m_desktop;
 
 	/**
 	 * Preferred Constructor.
 	 * It takes an integer of the number of pages to open at once. This number can scale based on the current system
 	 * and the available resources.
+	 * @param desktop A Desktop object representing the current desktop of the system. It will be used to open the URLs in the system default browser.
+	 * @param urlList A {@code List<String>} object representing the list of URLs to open in the browser.
 	 * @param numberOfPagesToOpen An integer representing the number of pages to open at once. This number should be greater than 0.
+	 * @param sleepTime An integer representing the number of miliseconds to sleep before opening each URL. This number should be positive or 0.
+	 * @throws NullPointerException If the desktop is null or the urlList is null
+	 * @throws IllegalStateException If the desktop object doesn't support Desktop.Action.BROWSE action.
 	 * @throws IllegalArgumentException If the pagination integer is less than or equal to 0.
 	 **/
-	public URLOpener( int numberOfPagesToOpen ) {
-		this.setNumberOfPagesToOpenAtOnce( numberOfPagesToOpen );
-	}
-
-	// Setters {{{
-	/**
-	 * The setter for the list of URLs to open.
-	 * @param list A List&lt;String&gt; object that contains all of the URLs to open. The list should not be null.
-	 * @throws NullPointerException If the provided list is null.
-	 **/
-	public void setUrlList( List<String> list ) {
-		if( list == null ) {
+	public URLOpener( Desktop desktop, List<String> urlList, int numberOfPagesToOpen, int sleepTime ) {
+		if( desktop == null ) {
+			throw new NullPointerException( "The specified Desktop object is null." );
+		}
+		if( !desktop.isSupported( Desktop.Action.BROWSE ) ) {
+			throw new IllegalStateException( "The current system's desktop doesn't support web browsing operations." );
+		}
+		if( urlList == null ) {
 			throw new NullPointerException( "The specified URL list should not be null." );
 		}
-		m_urls = list;
-	}
-
-	/**
-	 * The setter for the number of pages to open at once.
-	 * Choose this wisely as many opened pages at once could deplete the available system memory and crash your computer.
-	 * @param pages An Integer representing the number of pages to open at once. This needs to be greater than 0.
-	 * @throws IllegalArgumentException If the provided number of pages is less than 0.
-	 **/
-	public void setNumberOfPagesToOpenAtOnce( int pages ) {
-		if( pages <= 0 ) {
+		if( numberOfPagesToOpen <= 0 ) {
 			throw new IllegalArgumentException( "The number of pages to open at once should be greater than 0." );
 		}
-		m_numberOfPagesToOpenAtOnce = pages;
+		if( sleepTime < 0 ) {
+			throw new IllegalArgumentException( "The sleep time should be a positive number or 0." );
+		}
+
+		m_desktop = desktop;
+		m_urls = urlList;
+		m_numberOfPagesToOpenAtOnce = numberOfPagesToOpen;
+		m_sleepTime = sleepTime;
 	}
-	// }}}
-	
+
 	// Getters {{{
 	/**
 	 * Getter for the internal URL list.
@@ -125,18 +122,8 @@ public class URLOpener {
 			throw new NullPointerException( "The specified URI is null." );
 		}
 
-		if( Desktop.isDesktopSupported() ) {
-			throw new IllegalStateException( "The current system doesn't support a desktop operation." );
-		}
-
-		Desktop desktop = Desktop.getDesktop();
-
-		if( !desktop.isSupported( Desktop.Action.BROWSE ) ) {
-			throw new IllegalStateException( "The current system's desktop doesn't support web browsing operations." );
-		}
-
 		try {
-			desktop.browse( uri );
+			m_desktop.browse( uri );
 		} catch( IOException e ) {
 			throw new RuntimeException( "The user default browser is not found, or failed to launch: " + e.getMessage(), e );
 		}

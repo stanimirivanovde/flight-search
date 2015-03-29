@@ -48,6 +48,24 @@ public class SiteFactoryTest {
 			Assert.assertTrue( site != null );
 		}
 
+	@Test( expected=IllegalArgumentException.class )
+		public void SiteFactoryCreateSiteUnknown() throws Exception {
+			SiteFactory siteFactory = new SiteFactory();
+			Site site = siteFactory.createSite( SupportedSitesEnum.UNKNOWN, mockedTrip, mockedPermutationAlgorithm );
+		}
+
+	@Test( expected=NullPointerException.class )
+		public void SiteFactoryNullTrip() throws Exception {
+			SiteFactory siteFactory = new SiteFactory();
+			Site site = siteFactory.createSite( SupportedSitesEnum.HIPMUNK, null, mockedPermutationAlgorithm );
+		}
+
+	@Test( expected=NullPointerException.class )
+		public void SiteFactoryNullPermutationAlgorithm() throws Exception {
+			SiteFactory siteFactory = new SiteFactory();
+			Site site = siteFactory.createSite( SupportedSitesEnum.HIPMUNK, mockedTrip, null );
+		}
+
 	@After
 		public void tearDown() throws Exception {
 		}

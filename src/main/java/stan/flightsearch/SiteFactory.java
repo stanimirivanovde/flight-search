@@ -45,4 +45,29 @@ public class SiteFactory {
 				throw new IllegalArgumentException( "Bad site ID has been provided: " + siteId );
 		}
 	}
+
+	public SiteTemplate createSiteTemplate( SupportedSitesEnum siteId, Trip trip, PermutationAlgorithm permutationAlgorithm ) {
+		if( trip == null ) {
+			throw new NullPointerException( "The provided Trip object is null." );
+		}
+
+		if( permutationAlgorithm == null ) {
+			throw new NullPointerException( "The provided PermutationAlgorithm object is null." );
+		}
+
+		switch( siteId ) {
+			case KAYAK:
+				return new KayakTemplate( trip, permutationAlgorithm );
+			case GOOGLE:
+				return new GoogleTemplate( trip, permutationAlgorithm );
+			case MOMONDO:
+				return new MomondoTemplate( trip, permutationAlgorithm );
+			case HIPMUNK:
+				return new HipmunkTemplate( trip, permutationAlgorithm );
+			case FLIGHTHUB:
+				return new FlightHubTemplate( trip, permutationAlgorithm );
+			default:
+				throw new IllegalArgumentException( "Bad site ID has been provided: " + siteId );
+		}
+	}
 }

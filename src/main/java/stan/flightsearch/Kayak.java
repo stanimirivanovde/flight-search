@@ -54,7 +54,7 @@ public class Kayak implements Site {
 		m_permutationAlgorithm.setTravelInfo( m_trip.getReturning() );
 		List<PermutationResult> returningList = m_permutationAlgorithm.generate();
 
-		System.out.println( "Number of total URLs: " + departList.size() * returningList.size() );
+		System.out.println( "Number of total Multi City URLs: " + departList.size() * returningList.size() );
 		for( PermutationResult depart : departList ) {
 			for( PermutationResult returning : returningList ) {
 				String currentUrl = String.format( 
@@ -101,7 +101,7 @@ public class Kayak implements Site {
 		m_permutationAlgorithm.setTravelInfo( travelInfo );
 		List<PermutationResult> resultList = m_permutationAlgorithm.generate();
 
-		System.out.println( "Number of total URLs: " + resultList.size() );
+		System.out.println( "Number of total One Way URLs: " + resultList.size() );
 		for( PermutationResult result : resultList ) {
 			String currentUrl = String.format( 
 					// Base URL

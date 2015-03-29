@@ -15,7 +15,7 @@ public class FlightPermutations implements PermutationAlgorithm {
 	private TravelInfo m_travelInfo;
 
 	/**
-	 * Default constructor.
+	 * Default Constructor.
 	 **/
 	public FlightPermutations() {}
 
