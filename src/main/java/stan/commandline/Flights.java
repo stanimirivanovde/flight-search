@@ -8,7 +8,6 @@ import stan.flightsearch.JsonReader;
 import stan.flightsearch.Trip;
 import stan.flightsearch.SiteFactory;
 import stan.flightsearch.URLOpener;
-import stan.flightsearch.Site;
 import stan.flightsearch.SiteTemplate;
 import stan.flightsearch.SupportedSitesEnum;
 import stan.flightsearch.FlightPermutations;
@@ -26,20 +25,6 @@ public class Flights {
 
 			// This is used to create each site
 			SiteFactory factory = new SiteFactory();
-			/*
-			// This will hold the list of sites we want to search
-			ArrayList<Site> sites = new ArrayList<Site>();
-			// This will be the permutation algorithm to use
-			PermutationAlgorithm algorithm = new FlightPermutations();
-			for( SupportedSitesEnum s : argumentProcessor.getSites() ) {
-				sites.add( factory.createSite( s, trip, algorithm ) );
-			}
-
-			// Generate the URLs
-			for( Site site : sites ) {
-				site.generateUrls();
-			}
-			*/
 			// This will hold the list of sites we want to search
 			ArrayList<SiteTemplate> sites = new ArrayList<SiteTemplate>();
 			// This will be the permutation algorithm to use
@@ -54,7 +39,7 @@ public class Flights {
 			}
 
 			if( !argumentProcessor.getGenerateOnly() ) {
-				if( Desktop.isDesktopSupported() ) {
+				if( !Desktop.isDesktopSupported() ) {
 					throw new IllegalStateException( "The current system doesn't support a desktop operation." );
 				}
 
