@@ -17,7 +17,8 @@ public class TripGenerator {
 		List<String> returnDestinations = Arrays.asList( "PHL" );
 		List<FlightDate> returnDates = Arrays.asList( new FlightDate( 24, 12, 1984 ) );
 		TravelInfo returning = new TravelInfo( returnOrigins, returnDestinations, returnDates );
-		return new Trip( depart, returning );
+		int passangers = 1;
+		return new Trip( depart, returning, passangers );
 	}
 	public Trip generateOneWayTrip( boolean isDeparting ) {
 		Trip oneWayTrip = new Trip();

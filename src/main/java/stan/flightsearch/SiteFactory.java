@@ -13,6 +13,12 @@ import java.lang.IllegalArgumentException;
  **/
 public class SiteFactory {
 	/**
+	 * Private constructor in order to forbid creating site factories.
+	 **/
+	private SiteFactory() {
+	}
+
+	/**
 	 * Creates a new {@link SiteTemplate SiteTemplate} instance.
 	 * @param siteId A {@link SupportedSitesEnum SupportedSitesEnum} enum representing the object to create.
 	 * @param trip A {@link Trip Trip} object that will be passed to the created site.
@@ -21,7 +27,7 @@ public class SiteFactory {
 	 * @throws IllegalArgumentException If the specified enum doesn't exist.
 	 * @throws NullPointerException If the specified {@link Trip Trip} or {@link PermutationAlgorithm PermutationAlgorithm} objects are null.
 	 **/
-	public SiteTemplate createSiteTemplate( SupportedSitesEnum siteId, Trip trip, PermutationAlgorithm permutationAlgorithm ) {
+	public static SiteTemplate createSiteTemplate( SupportedSitesEnum siteId, Trip trip, PermutationAlgorithm permutationAlgorithm ) {
 		if( trip == null ) {
 			throw new NullPointerException( "The provided Trip object is null." );
 		}

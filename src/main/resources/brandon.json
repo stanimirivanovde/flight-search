@@ -1,0 +1,36 @@
+{
+	"depart": {
+		"origins": [
+			"PHL",
+			"BWI",
+			"IAD"
+		],
+		"destinations": [
+			"ROM"
+		],
+		"dates": [
+			{
+				"day": 5,
+				"month": 9,
+				"year": 2015
+			}
+		]
+	},
+	"returning": {
+		"origins": [
+			"PAR"
+		],
+		"destinations": [
+			"PHL",
+			"BWI",
+			"IAD"
+		],
+		"dates": [
+			{
+				"day": 13,
+				"month": 9,
+				"year": 2015
+			}
+		]
+	}
+}

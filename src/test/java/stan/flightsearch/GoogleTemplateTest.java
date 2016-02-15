@@ -6,12 +6,13 @@ import static org.mockito.Mockito.*;
 import java.util.Arrays;
 import java.util.List;
 
-public class MomondoTest {
+public class GoogleTemplateTest {
 	private Trip m_mockedTrip;
 	private PermutationAlgorithm m_mockedPermutationAlgorithm;
 
 	@Before
 		public void setUp() throws Exception {
+			// Set up our mocks before every test.
 			m_mockedTrip = mock( Trip.class );
 			m_mockedPermutationAlgorithm = mock( PermutationAlgorithm.class );
 		}
@@ -27,42 +28,12 @@ public class MomondoTest {
 				.thenReturn( Arrays.asList( new PermutationResult( "PHL", "VAR", new FlightDate( 03, 12, 1984 ) ) ) )
 				.thenReturn( Arrays.asList( new PermutationResult( "MAD", "PHL", new FlightDate( 24, 12, 1984 ) ) ) );
 
-			Site momondo = new Momondo( m_mockedTrip, m_mockedPermutationAlgorithm );
-			momondo.generateUrls();
-			List<String> urls = momondo.getGeneratedUrls();
+			SiteTemplate google = SiteFactory.createSiteTemplate( SupportedSitesEnum.GOOGLE, m_mockedTrip, m_mockedPermutationAlgorithm );
+			google.generateUrls();
+			List<String> urls = google.getGeneratedUrls();
 			// Should get only one url
 			Assert.assertEquals( urls.size(), 1 );
-			Assert.assertEquals( urls.get( 0 ), "http://www.momondo.com/multicity/?Search=true&TripType=multi&SegNo=2&SO0=PHL&SD0=VAR&SDP0=03-12-1984&SO1=MAD&SD1=PHL&SDP1=24-12-1984&AD=1&TK=ECO&NA=false" );
-		}
-
-	@Test
-		public void multiCityTripSetters() throws Exception {
-			// Stub the mocked Trip methods to return empty but valid TravelInfo objects.
-			when( m_mockedTrip.getDepart() ).thenReturn( new TravelInfo() );
-			when( m_mockedTrip.getReturning() ).thenReturn( new TravelInfo() );
-
-			// Stub the mocked permutation algorithm with the result we expect.
-			when( m_mockedPermutationAlgorithm.generate() )
-				.thenReturn( Arrays.asList( new PermutationResult( "PHL", "VAR", new FlightDate( 03, 12, 1984 ) ) ) )
-				.thenReturn( Arrays.asList( new PermutationResult( "MAD", "PHL", new FlightDate( 24, 12, 1984 ) ) ) );
-
-			Site momondo = new Momondo();
-
-			// Set the base URL
-			String baseUrl = "http://www.momondo.com";
-			momondo.setBaseUrl( baseUrl );
-			Assert.assertEquals( momondo.getBaseUrl(), baseUrl );
-
-			// Set the permutation algorithm
-			momondo.setPermutationAlgorithm( m_mockedPermutationAlgorithm );
-			// Set the trip
-			momondo.setTrip( m_mockedTrip );
-
-			momondo.generateUrls();
-			List<String> urls = momondo.getGeneratedUrls();
-			// Should get only one url
-			Assert.assertEquals( urls.size(), 1 );
-			Assert.assertEquals( urls.get( 0 ), "http://www.momondo.com/multicity/?Search=true&TripType=multi&SegNo=2&SO0=PHL&SD0=VAR&SDP0=03-12-1984&SO1=MAD&SD1=PHL&SDP1=24-12-1984&AD=1&TK=ECO&NA=false" );
+			Assert.assertEquals( urls.get( 0 ), "https://www.google.com/flights/#search;iti=PHL_VAR_1984-12-03*MAD_PHL_1984-12-24;tt=m" );
 		}
 
 	@Ignore( "enable this when the functionality is implemented" )
@@ -75,9 +46,9 @@ public class MomondoTest {
 			when( m_mockedPermutationAlgorithm.generate() )
 				.thenReturn( Arrays.asList( new PermutationResult( "PHL", "VAR", new FlightDate( 03, 12, 1984 ) ) ) );
 
-			Site momondo = new Momondo( m_mockedTrip, m_mockedPermutationAlgorithm );
-			momondo.generateUrls();
-			List<String> urls = momondo.getGeneratedUrls();
+			SiteTemplate google = SiteFactory.createSiteTemplate( SupportedSitesEnum.GOOGLE, m_mockedTrip, m_mockedPermutationAlgorithm );
+			google.generateUrls();
+			List<String> urls = google.getGeneratedUrls();
 			// Should get only one url
 			Assert.assertEquals( urls.size(), 1 );
 			Assert.assertEquals( urls.get( 0 ), "http://www.kayak.com/flights/PHL-VAR/1984-12-03" );
@@ -93,9 +64,9 @@ public class MomondoTest {
 			when( m_mockedPermutationAlgorithm.generate() )
 				.thenReturn( Arrays.asList( new PermutationResult( "PHL", "VAR", new FlightDate( 03, 12, 1984 ) ) ) );
 
-			Site momondo = new Momondo( m_mockedTrip, m_mockedPermutationAlgorithm );
-			momondo.generateUrls();
-			List<String> urls = momondo.getGeneratedUrls();
+			SiteTemplate google = SiteFactory.createSiteTemplate( SupportedSitesEnum.GOOGLE, m_mockedTrip, m_mockedPermutationAlgorithm );
+			google.generateUrls();
+			List<String> urls = google.getGeneratedUrls();
 			// Should get only one url
 			Assert.assertEquals( urls.size(), 1 );
 			Assert.assertEquals( urls.get( 0 ), "http://www.kayak.com/flights/PHL-VAR/1984-12-03" );

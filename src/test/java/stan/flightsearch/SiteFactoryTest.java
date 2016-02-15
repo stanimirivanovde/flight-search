@@ -15,55 +15,47 @@ public class SiteFactoryTest {
 
 	@Test
 		public void SiteFactoryCreateSiteKayak() throws Exception {
-			SiteFactory siteFactory = new SiteFactory();
-			Site site = siteFactory.createSite( SupportedSitesEnum.KAYAK, mockedTrip, mockedPermutationAlgorithm );
+			SiteTemplate site = SiteFactory.createSiteTemplate( SupportedSitesEnum.KAYAK, mockedTrip, mockedPermutationAlgorithm );
 			Assert.assertTrue( site != null );
 		}
 
 	@Test
 		public void SiteFactoryCreateSiteGoogle() throws Exception {
-			SiteFactory siteFactory = new SiteFactory();
-			Site site = siteFactory.createSite( SupportedSitesEnum.GOOGLE, mockedTrip, mockedPermutationAlgorithm );
+			SiteTemplate site = SiteFactory.createSiteTemplate( SupportedSitesEnum.GOOGLE, mockedTrip, mockedPermutationAlgorithm );
 			Assert.assertTrue( site != null );
 		}
 
 	@Test
 		public void SiteFactoryCreateSiteMomondo() throws Exception {
-			SiteFactory siteFactory = new SiteFactory();
-			Site site = siteFactory.createSite( SupportedSitesEnum.MOMONDO, mockedTrip, mockedPermutationAlgorithm );
+			SiteTemplate site = SiteFactory.createSiteTemplate( SupportedSitesEnum.MOMONDO, mockedTrip, mockedPermutationAlgorithm );
 			Assert.assertTrue( site != null );
 		}
 
 	@Test
 		public void SiteFactoryCreateSiteHipmunk() throws Exception {
-			SiteFactory siteFactory = new SiteFactory();
-			Site site = siteFactory.createSite( SupportedSitesEnum.HIPMUNK, mockedTrip, mockedPermutationAlgorithm );
+			SiteTemplate site = SiteFactory.createSiteTemplate( SupportedSitesEnum.HIPMUNK, mockedTrip, mockedPermutationAlgorithm );
 			Assert.assertTrue( site != null );
 		}
 
 	@Test
 		public void SiteFactoryCreateSiteFlightHub() throws Exception {
-			SiteFactory siteFactory = new SiteFactory();
-			Site site = siteFactory.createSite( SupportedSitesEnum.FLIGHTHUB, mockedTrip, mockedPermutationAlgorithm );
+			SiteTemplate site = SiteFactory.createSiteTemplate( SupportedSitesEnum.FLIGHTHUB, mockedTrip, mockedPermutationAlgorithm );
 			Assert.assertTrue( site != null );
 		}
 
 	@Test( expected=IllegalArgumentException.class )
 		public void SiteFactoryCreateSiteUnknown() throws Exception {
-			SiteFactory siteFactory = new SiteFactory();
-			Site site = siteFactory.createSite( SupportedSitesEnum.UNKNOWN, mockedTrip, mockedPermutationAlgorithm );
+			SiteTemplate site = SiteFactory.createSiteTemplate( SupportedSitesEnum.UNKNOWN, mockedTrip, mockedPermutationAlgorithm );
 		}
 
 	@Test( expected=NullPointerException.class )
 		public void SiteFactoryNullTrip() throws Exception {
-			SiteFactory siteFactory = new SiteFactory();
-			Site site = siteFactory.createSite( SupportedSitesEnum.HIPMUNK, null, mockedPermutationAlgorithm );
+			SiteTemplate site = SiteFactory.createSiteTemplate( SupportedSitesEnum.HIPMUNK, null, mockedPermutationAlgorithm );
 		}
 
 	@Test( expected=NullPointerException.class )
 		public void SiteFactoryNullPermutationAlgorithm() throws Exception {
-			SiteFactory siteFactory = new SiteFactory();
-			Site site = siteFactory.createSite( SupportedSitesEnum.HIPMUNK, mockedTrip, null );
+			SiteTemplate site = SiteFactory.createSiteTemplate( SupportedSitesEnum.HIPMUNK, mockedTrip, null );
 		}
 
 	@After

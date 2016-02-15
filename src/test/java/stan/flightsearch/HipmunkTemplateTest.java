@@ -6,7 +6,7 @@ import static org.mockito.Mockito.*;
 import java.util.Arrays;
 import java.util.List;
 
-public class HipmunkTest {
+public class HipmunkTemplateTest {
 	private Trip m_mockedTrip;
 	private PermutationAlgorithm m_mockedPermutationAlgorithm;
 
@@ -28,37 +28,7 @@ public class HipmunkTest {
 				.thenReturn( Arrays.asList( new PermutationResult( "PHL", "VAR", new FlightDate( 03, 12, 1984 ) ) ) )
 				.thenReturn( Arrays.asList( new PermutationResult( "MAD", "PHL", new FlightDate( 24, 12, 1984 ) ) ) );
 
-			Site hipmunk = new Hipmunk( m_mockedTrip, m_mockedPermutationAlgorithm );
-			hipmunk.generateUrls();
-			List<String> urls = hipmunk.getGeneratedUrls();
-			// Should get only one url
-			Assert.assertEquals( urls.size(), 1 );
-			Assert.assertEquals( urls.get( 0 ), "https://www.hipmunk.com/flights#f0=phl;t0=var;d0=1984-12-03;f1=mad;t1=phl;d1=1984-12-24" );
-		}
-
-	@Test
-		public void multiCityTripSetters() throws Exception {
-			// Stub the mocked Trip methods to return empty but valid TravelInfo objects.
-			when( m_mockedTrip.getDepart() ).thenReturn( new TravelInfo() );
-			when( m_mockedTrip.getReturning() ).thenReturn( new TravelInfo() );
-
-			// Stub the mocked permutation algorithm with the result we expect.
-			when( m_mockedPermutationAlgorithm.generate() )
-				.thenReturn( Arrays.asList( new PermutationResult( "PHL", "VAR", new FlightDate( 03, 12, 1984 ) ) ) )
-				.thenReturn( Arrays.asList( new PermutationResult( "MAD", "PHL", new FlightDate( 24, 12, 1984 ) ) ) );
-
-			Site hipmunk = new Hipmunk();
-
-			// Set the base URL
-			String baseUrl = "https://www.hipmunk.com/flights#";
-			hipmunk.setBaseUrl( baseUrl );
-			Assert.assertEquals( hipmunk.getBaseUrl(), baseUrl );
-
-			// Set the permutation algorithm
-			hipmunk.setPermutationAlgorithm( m_mockedPermutationAlgorithm );
-			// Set the trip
-			hipmunk.setTrip( m_mockedTrip );
-
+			SiteTemplate hipmunk = SiteFactory.createSiteTemplate( SupportedSitesEnum.HIPMUNK, m_mockedTrip, m_mockedPermutationAlgorithm );
 			hipmunk.generateUrls();
 			List<String> urls = hipmunk.getGeneratedUrls();
 			// Should get only one url
@@ -76,8 +46,7 @@ public class HipmunkTest {
 			when( m_mockedPermutationAlgorithm.generate() )
 				.thenReturn( Arrays.asList( new PermutationResult( "PHL", "VAR", new FlightDate( 03, 12, 1984 ) ) ) );
 
-			//Site hipmunk = new Hipmunk( trip );
-			Site hipmunk = new Hipmunk( m_mockedTrip, m_mockedPermutationAlgorithm );
+			SiteTemplate hipmunk = SiteFactory.createSiteTemplate( SupportedSitesEnum.HIPMUNK, m_mockedTrip, m_mockedPermutationAlgorithm );
 			hipmunk.generateUrls();
 			List<String> urls = hipmunk.getGeneratedUrls();
 			// Should get only one url
@@ -95,7 +64,7 @@ public class HipmunkTest {
 			when( m_mockedPermutationAlgorithm.generate() )
 				.thenReturn( Arrays.asList( new PermutationResult( "PHL", "VAR", new FlightDate( 03, 12, 1984 ) ) ) );
 
-			Site hipmunk = new Hipmunk( m_mockedTrip, m_mockedPermutationAlgorithm );
+			SiteTemplate hipmunk = SiteFactory.createSiteTemplate( SupportedSitesEnum.HIPMUNK, m_mockedTrip, m_mockedPermutationAlgorithm );
 
 			hipmunk.generateUrls();
 			List<String> urls = hipmunk.getGeneratedUrls();

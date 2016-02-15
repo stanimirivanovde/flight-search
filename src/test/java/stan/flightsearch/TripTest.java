@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 public class TripTest {
 	private TravelInfo m_depart;
 	private TravelInfo m_returning;
+	private int m_passangers;
 
 	private boolean validateTravelInfo( TravelInfo a, TravelInfo b ) { // {{{
 		if( a.getOrigins().size() != b.getOrigins().size() 
@@ -52,29 +53,30 @@ public class TripTest {
 					Arrays.asList( "PHL" ),
 					Arrays.asList( new FlightDate( 10, 1, 2015 ) )
 				);
+			m_passangers = 1;
 		}
 
 	@Test
 		public void TripPreferredConstructorValidArguments() throws Exception {
-			Trip trip = new Trip( m_depart, m_returning );
+			Trip trip = new Trip( m_depart, m_returning, m_passangers );
 			Assert.assertEquals( trip.getDepart(), m_depart );
 			Assert.assertEquals( trip.getReturning(), m_returning );
 		}
 
 	@Test( expected=IllegalArgumentException.class )
 		public void TripPreferredConstructorNullArguments() throws Exception {
-			Trip trip = new Trip( null, null );
+			Trip trip = new Trip( null, null, m_passangers );
 		}
 
 	@Test
 		public void TripPreferredConstructorNullDepart() throws Exception {
-			Trip trip = new Trip( null, m_returning );
+			Trip trip = new Trip( null, m_returning, m_passangers );
 			Assert.assertEquals( trip.getReturning(), m_returning );
 		}
 
 	@Test
 		public void TripPreferredConstructorNullReturning() throws Exception {
-			Trip trip = new Trip( m_depart, null );
+			Trip trip = new Trip( m_depart, null, m_passangers );
 			Assert.assertEquals( trip.getDepart(), m_depart );
 		}
 
@@ -83,8 +85,10 @@ public class TripTest {
 			Trip trip = new Trip();
 			trip.setDepart( m_depart );
 			trip.setReturning( m_returning );
+			trip.setNumberOfPassangers( m_passangers );
 			Assert.assertEquals( trip.getDepart(), m_depart );
 			Assert.assertEquals( trip.getReturning(), m_returning );
+			Assert.assertEquals( trip.getNumberOfPassangers(), m_passangers );
 		}
 	
 	@Test
@@ -115,7 +119,7 @@ public class TripTest {
 
 	@Test
 		public void TripToString() throws Exception {
-			Trip trip = new Trip( m_depart, m_returning );
+			Trip trip = new Trip( m_depart, m_returning, m_passangers );
 			URL testDataUrl = this.getClass().getResource("/TripTest-TripToString.txt");
 			String outputString = new String( Files.readAllBytes( Paths.get( testDataUrl.getFile() ) ), "UTF-8" );
 			Assert.assertEquals( trip.toString(), outputString );
@@ -123,7 +127,7 @@ public class TripTest {
 
 	@Test
 		public void TripToStringNullDepart() throws Exception {
-			Trip trip = new Trip( null, m_returning );
+			Trip trip = new Trip( null, m_returning, m_passangers );
 			URL testDataUrl = this.getClass().getResource("/TripTest-TripToStringNullDepart.txt");
 			String outputString = new String( Files.readAllBytes( Paths.get( testDataUrl.getFile() ) ), "UTF-8" );
 			Assert.assertEquals( trip.toString(), outputString );
@@ -131,7 +135,7 @@ public class TripTest {
 
 	@Test
 		public void TripToStringNullReturning() throws Exception {
-			Trip trip = new Trip( m_depart, null );
+			Trip trip = new Trip( m_depart, null, m_passangers );
 			URL testDataUrl = this.getClass().getResource("/TripTest-TripToStringNullReturning.txt");
 			String outputString = new String( Files.readAllBytes( Paths.get( testDataUrl.getFile() ) ), "UTF-8" );
 			Assert.assertEquals( trip.toString(), outputString );

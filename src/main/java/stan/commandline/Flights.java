@@ -24,14 +24,12 @@ public class Flights {
 			Trip trip = flightsReader.parseFile();
 			trip.setNumberOfPassangers( argumentProcessor.getNumberOfPassangers() );
 
-			// This is used to create each site
-			SiteFactory factory = new SiteFactory();
 			// This will hold the list of sites we want to search
 			ArrayList<SiteTemplate> sites = new ArrayList<SiteTemplate>();
 			// This will be the permutation algorithm to use
 			PermutationAlgorithm algorithm = new FlightPermutations();
 			for( SupportedSitesEnum s : argumentProcessor.getSites() ) {
-				sites.add( factory.createSiteTemplate( s, trip, algorithm ) );
+				sites.add( SiteFactory.createSiteTemplate( s, trip, algorithm ) );
 			}
 
 			// Generate the URLs
