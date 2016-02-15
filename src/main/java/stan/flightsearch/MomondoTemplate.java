@@ -4,7 +4,7 @@ package stan.flightsearch;
  * This class helps generate momondo.com URLs. It implements all hooks from the {@link SiteTemplate SiteTemplate} abstract
  * class.
  * A multi-city Momondo URL looks like this:
- * <b>{@code http://www.momondo.com/multicity/?Search=true&TripType=multi&SegNo=2&SO0=PHL&SD0=VAR&SDP0=11-07-2015&SO1=MAD&SD1=PHL&SDP1=08-08-2015&AD=1&TK=ECO&NA=false}</b>
+ * <b>{@code http://www.momondo.com/flightsearch/?Search=true&TripType=4&SegNo=2&SO0=PHL&SD0=MAD&SDP0=30-04-2016&SO1=BCN&SD1=PHL&SDP1=08-05-2016&AD=1&TK=ECO&DO=false&NA=false#Search=true&TripType=4&SegNo=2&SO0=PHL&SD0=MAD&SDP0=30-04-2016&SO1=BCN&SD1=PHL&SDP1=08-05-2016&AD=1&TK=ECO&DO=false&NA=false}</b>
  *
  * @author Stanimir Ivanov
  * @version %I%, %G%
@@ -29,9 +29,9 @@ public class MomondoTemplate extends SiteTemplate {
 				// Base URL
 				"%s/" +
 				// trip type
-				"multicity/" +
+				"flightsearch/" +
 				// trip type again
-				"?Search=true&TripType=multi" +
+				"?Search=true&TripType=4" +
 				// Something I don't understand
 				"&SegNo=2", 
 				m_baseUrl
@@ -53,8 +53,37 @@ public class MomondoTemplate extends SiteTemplate {
 				// Second date
 				"&SDP1=%02d-%02d-%d" +
 				// Final tail of the query
-				"&AD=1&TK=ECO&NA=false",
+				"&AD=1&TK=ECO&DO=false&NA=false" +
+				// For some reason we need to enter the trip again
+				"#Search=true&TripType=4&SegNo=2" +
+				// First Origin
+				"&SO0=%s" +
+				// First Destination
+				"&SD0=%s" +
+				// First Date
+				"&SDP0=%02d-%02d-%d" +
+				// Second Origin
+				"&SO1=%s" +
+				// Second Destination
+				"&SD1=%s" +
+				// Second Date
+				"&SDP1=%02d-%02d-%d" +
+				// Number of passangers
+				"&AD=2" +
+				// Final tail of the query
+				"&TK=ECO&DO=false&NA=false",
 				craftedUrl,
+				depart.getFrom(),
+				depart.getTo(),
+				depart.getDate().getDay(),
+				depart.getDate().getMonth(),
+				depart.getDate().getYear(),
+				returning.getFrom(),
+				returning.getTo(),
+				returning.getDate().getDay(),
+				returning.getDate().getMonth(),
+				returning.getDate().getYear(),
+				// Second part of the query with the same information
 				depart.getFrom(),
 				depart.getTo(),
 				depart.getDate().getDay(),
