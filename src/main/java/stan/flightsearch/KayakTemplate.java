@@ -37,7 +37,9 @@ public class KayakTemplate extends SiteTemplate {
 				// Return To
 				"%s/" +
 				// Return Date
-				"%d-%02d-%02d",
+				"%d-%02d-%02d/" +
+				// Number of passangers
+				"%dadults",
 				m_baseUrl,
 				depart.getFrom(),
 				depart.getTo(),
@@ -48,7 +50,8 @@ public class KayakTemplate extends SiteTemplate {
 				returning.getTo(),
 				returning.getDate().getYear(),
 				returning.getDate().getMonth(),
-				returning.getDate().getDay()
+				returning.getDate().getDay(),
+				m_trip.getNumberOfPassangers()
 		);
 	} // }}}
 

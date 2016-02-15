@@ -24,6 +24,7 @@ public class ProcessCommandLineArguments {
 	private boolean generateOnly = false;
 	private int numberOfPagesToOpenAtOnce = 50;
 	private int sleepTime = 800;
+	private int numberOfPassangers = 1;
 
 	public ProcessCommandLineArguments( String[] args ) {
 		this.args = args;
@@ -58,6 +59,11 @@ public class ProcessCommandLineArguments {
 							.withDescription( "The number of seconds to sleep between each opened URL in miliseconds. The default is 800 miliseconds." )
 							.hasArgs( 1 )
 							.create( "t" );
+		Option passangers = OptionBuilder.withArgName( "NUMBER OF PASSANGERS" )
+							.withLongOpt( "passangers" )
+							.withDescription( "The number of passangers to search for. The default is 1." )
+							.hasArgs( 1 )
+							.create( "n" );
 
 		options.addOption( help );
 		options.addOption( site );
@@ -65,6 +71,7 @@ public class ProcessCommandLineArguments {
 		options.addOption( generate );
 		options.addOption( paginate );
 		options.addOption( sleep );
+		options.addOption( passangers );
 	}
 
 	private void printHelp() {
@@ -101,8 +108,17 @@ public class ProcessCommandLineArguments {
 			}
 			sites = getSupportedSites( cmd.getOptionValues( "s" ) );
 			generateOnly = cmd.hasOption( "g" );
+			// Pagination
 			if( cmd.hasOption( "p" ) ) {
 				numberOfPagesToOpenAtOnce = Integer.parseInt( cmd.getOptionValue( "p" ) );
+			}
+			// Sleep time
+			if( cmd.hasOption( "t" ) ) {
+				sleepTime = Integer.parseInt( cmd.getOptionValue( "t" ) );
+			}
+			// Number of passangers
+			if( cmd.hasOption( "n" ) ) {
+				numberOfPassangers = Integer.parseInt( cmd.getOptionValue( "n" ) );
 			}
 		} catch (ParseException e) {
 			System.err.println( e.getMessage() );
@@ -115,5 +131,6 @@ public class ProcessCommandLineArguments {
 	public boolean getGenerateOnly() { return generateOnly; }
 	public int getNumberOfPagesToOpenAtOnce() { return numberOfPagesToOpenAtOnce; }
 	public int getSleepTime() { return sleepTime; }
+	public int getNumberOfPassangers() { return numberOfPassangers; }
 }
 

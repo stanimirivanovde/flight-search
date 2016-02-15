@@ -4,7 +4,7 @@ package stan.flightsearch;
  * This class helps generate flighthub.com URLs. It implements all hooks from the {@link SiteTemplate SiteTemplate} abstract
  * class.
  * A multi-city FlightHub URL looks like this:
- * <b>{@code http://www.flighthub.com/flight/search?seg0_from=PHL&seg0_date=2015-07-11&seg0_to=VAR&seg1_from=MAD&seg1_date=2015-08-08&seg1_to=PHL&num_adults=1&num_children=0&num_infants=0&num_infants_lap=0&seat_class=Economy}</b>
+ * <b>{@code http://www.flighthub.com/flight/search?seg0_from=IAD&seg0_date=2016-03-29&seg0_to=MAD&seg1_from=BCN&seg1_date=2016-04-05&seg1_to=IAD&num_adults=3&num_children=0&num_infants=0&num_infants_lap=0&seat_class=Economy&campaign=1&search_id=97407f29cfcab1ed645d1ccd223c2abb&flexible_search_id=d5cd985a7d1014ad832323b922d4ab0c}</b>
  *
  * @author Stanimir Ivanov
  * @version %I%, %G%
@@ -39,8 +39,10 @@ public class FlightHubTemplate extends SiteTemplate {
 				"&seg1_date=%d-%02d-%02d" +
 				// Return To
 				"&seg1_to=%s" +
+				// Number of passangers
+				"&num_adults=%d" +
 				// Final parameters
-				"&num_adults=1&num_children=0&num_infants=0&num_infants_lap=0&seat_class=Economy",
+				"&num_children=0&num_infants=0&num_infants_lap=0&seat_class=Economy",
 				m_baseUrl,
 				depart.getFrom().toLowerCase(),
 				depart.getDate().getYear(),
@@ -51,7 +53,8 @@ public class FlightHubTemplate extends SiteTemplate {
 				returning.getDate().getYear(),
 				returning.getDate().getMonth(),
 				returning.getDate().getDay(),
-				returning.getTo().toLowerCase()
+				returning.getTo().toLowerCase(),
+				m_trip.getNumberOfPassangers()
 		);
 	} // }}}
 

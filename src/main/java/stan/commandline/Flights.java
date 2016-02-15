@@ -22,6 +22,7 @@ public class Flights {
 			// Get our trip details
 			FlightsReader flightsReader = new JsonReader( argumentProcessor.getJsonFile() );
 			Trip trip = flightsReader.parseFile();
+			trip.setNumberOfPassangers( argumentProcessor.getNumberOfPassangers() );
 
 			// This is used to create each site
 			SiteFactory factory = new SiteFactory();

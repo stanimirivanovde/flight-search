@@ -52,8 +52,10 @@ public class MomondoTemplate extends SiteTemplate {
 				"&SD1=%s" +
 				// Second date
 				"&SDP1=%02d-%02d-%d" +
+				// Number of passangers
+				"&AD=%d" +
 				// Final tail of the query
-				"&AD=1&TK=ECO&DO=false&NA=false" +
+				"&TK=ECO&DO=false&NA=false" +
 				// For some reason we need to enter the trip again
 				"#Search=true&TripType=4&SegNo=2" +
 				// First Origin
@@ -69,7 +71,7 @@ public class MomondoTemplate extends SiteTemplate {
 				// Second Date
 				"&SDP1=%02d-%02d-%d" +
 				// Number of passangers
-				"&AD=2" +
+				"&AD=%d" +
 				// Final tail of the query
 				"&TK=ECO&DO=false&NA=false",
 				craftedUrl,
@@ -83,6 +85,7 @@ public class MomondoTemplate extends SiteTemplate {
 				returning.getDate().getDay(),
 				returning.getDate().getMonth(),
 				returning.getDate().getYear(),
+				m_trip.getNumberOfPassangers(),
 				// Second part of the query with the same information
 				depart.getFrom(),
 				depart.getTo(),
@@ -93,7 +96,8 @@ public class MomondoTemplate extends SiteTemplate {
 				returning.getTo(),
 				returning.getDate().getDay(),
 				returning.getDate().getMonth(),
-				returning.getDate().getYear()
+				returning.getDate().getYear(),
+				m_trip.getNumberOfPassangers()
 		);
 	} // }}}
 

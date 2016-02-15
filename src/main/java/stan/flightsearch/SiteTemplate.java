@@ -16,7 +16,8 @@ import java.util.ArrayList;
  **/
 public abstract class SiteTemplate {
 	//! This is the Trip object that contains all of the details for the flight
-	private Trip m_trip;
+	//! The child classes can read it for the number of passangers.
+	protected final Trip m_trip;
 	//! This will have the generated URLs.
 	private List<String> m_generatedUrls = new ArrayList<String>();
 	//! This is the permutation algorithm to use.

@@ -40,11 +40,13 @@ import java.lang.StringBuilder;
 public class Trip {
 	private TravelInfo m_depart;
 	private TravelInfo m_returning;
+	private int m_numberOfPassangers = 1;
 
 	/**
-	 * Default Constructor.
+	 * Default Constructor. This is used by the JSON reading library. Stupid but necessary at the moment unless I refactor it.
 	 **/
-	public Trip() {}
+	public Trip() {
+	}
 
 	/**
 	 * Preferred Constructor.
@@ -53,16 +55,19 @@ public class Trip {
 	 * @param returning A {@link TravelInfo TravelInfo} object containing the returning information.
 	 * @throws IllegalArgumentException If both the depart or returning TravelInfo objects are null.
 	 **/
-	public Trip( TravelInfo depart, TravelInfo returning ) {
-		if( depart == null && returning == null ) {
-			throw new IllegalArgumentException( "Can't have both the depart and returning TravelInfo objects be null." );
+	public Trip( TravelInfo depart, TravelInfo returning, int numberOfPassangers ) {
+		if( depart == null ) {
+			throw new NullPointerException( "The depart travel info object is null." );
 		}
-		if( depart != null ) {
-			this.setDepart( depart );
+		if( returning == null ) {
+			throw new NullPointerException( "The returning travel info object is null." );
 		}
-		if( returning != null ) {
-			this.setReturning( returning );
+		if( numberOfPassangers < 1 ) {
+			throw new IllegalArgumentException( "The number of passangers is invalid." );
 		}
+		m_depart = depart;
+		m_returning = returning;
+		m_numberOfPassangers = numberOfPassangers;
 	}
 
 	// Setters {{{
@@ -89,6 +94,13 @@ public class Trip {
 		}
 		m_returning = travelInfo;
 	}
+
+	public void setNumberOfPassangers( int passangers ) {
+		if( passangers < 1 ) {
+			throw new IllegalArgumentException( "Bad number of passangers: " + passangers );
+		}
+		m_numberOfPassangers = passangers;
+	}
 	// }}}
 	
 	// Getters {{{
@@ -103,6 +115,14 @@ public class Trip {
 	 * @return A {@link TravelInfo TravelInfo} object representing the returning information.
 	 **/
 	public TravelInfo getReturning() { return m_returning; }
+
+	/**
+	 * Getter for the number of passangers.
+	 * @return An integer representing the number of passangers.
+	 **/
+	public int getNumberOfPassangers() {
+		return m_numberOfPassangers;
+	}
 	// }}}
 
 	/**

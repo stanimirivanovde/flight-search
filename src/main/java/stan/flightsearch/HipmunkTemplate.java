@@ -37,7 +37,9 @@ public class HipmunkTemplate extends SiteTemplate {
 				// Return To
 				"t1=%s;" +
 				// Return Date
-				"d1=%d-%02d-%02d",
+				"d1=%d-%02d-%02d;" +
+				// Number Of Passangers
+				"p=%d",
 				m_baseUrl,
 				depart.getFrom().toLowerCase(),
 				depart.getTo().toLowerCase(),
@@ -48,7 +50,8 @@ public class HipmunkTemplate extends SiteTemplate {
 				returning.getTo().toLowerCase(),
 				returning.getDate().getYear(),
 				returning.getDate().getMonth(),
-				returning.getDate().getDay()
+				returning.getDate().getDay(),
+				m_trip.getNumberOfPassangers()
 		);
 	} // }}}
 

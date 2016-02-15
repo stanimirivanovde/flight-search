@@ -39,7 +39,9 @@ public class GoogleTemplate extends SiteTemplate {
 				// Return Date
 				"%d-%02d-%02d" +
 				// End of URL
-				";tt=m",
+				";tt=m" +
+				// Number of passangers
+				";px=%d",
 				m_baseUrl,
 				depart.getFrom(),
 				depart.getTo(),
@@ -50,7 +52,8 @@ public class GoogleTemplate extends SiteTemplate {
 				returning.getTo(),
 				returning.getDate().getYear(),
 				returning.getDate().getMonth(),
-				returning.getDate().getDay()
+				returning.getDate().getDay(),
+				m_trip.getNumberOfPassangers()
 		);
 	} // }}}
 
