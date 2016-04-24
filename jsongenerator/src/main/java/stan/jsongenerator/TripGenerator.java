@@ -59,15 +59,15 @@ public class TripGenerator {
 				Calendar firstDayCalendar = generator.getFirstDayCalendar();
 				Calendar lastDayCalendar = generator.getLastDayCalendar();
 
-				FlightDate departDate = new FlightDate( firstDayCalendar.get( Calendar.DAY_OF_MONTH ), firstDayCalendar.get( Calendar.MONTH ), firstDayCalendar.get( Calendar.YEAR ) ); 
-				FlightDate returnDate = new FlightDate( lastDayCalendar.get( Calendar.DAY_OF_MONTH ), lastDayCalendar.get( Calendar.MONTH ), firstDayCalendar.get( Calendar.YEAR ) ); 
+				FlightDate departDate = new FlightDate( firstDayCalendar.get( Calendar.DAY_OF_MONTH ), Util.calendarToHumanMonth( firstDayCalendar.get( Calendar.MONTH ) ), firstDayCalendar.get( Calendar.YEAR ) ); 
+				FlightDate returnDate = new FlightDate( lastDayCalendar.get( Calendar.DAY_OF_MONTH ), Util.calendarToHumanMonth( lastDayCalendar.get( Calendar.MONTH ) ), firstDayCalendar.get( Calendar.YEAR ) ); 
 				System.out.println( "The depart date: " + departDate );
 				System.out.println( "The return date: " + returnDate );
 
 				List<FlightDate> departDateList = new ArrayList<>();
 				departDateList.add( departDate );
 				List<FlightDate> returnDateList = new ArrayList<>();
-				returnDateList.add( departDate );
+				returnDateList.add( returnDate );
 
 				TravelInfo departTravel = new TravelInfo( departAirportList, returnAirportList, departDateList );
 				TravelInfo returnTravel = new TravelInfo( returnAirportList, departAirportList, returnDateList );

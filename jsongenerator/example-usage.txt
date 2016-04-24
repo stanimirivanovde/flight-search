@@ -1,0 +1,2 @@
+This command will generate all flights from IAD to BOS from date 2016-5-1 to 2016-7-1 from THU to SUN of every week using a 3 day moving window for 2 passangers. The moving window will make move the dates from THU-SUN to FRI-MON and SAT-TUE.
+./run.sh -d IAD -a BOS -s 2016-5-1 -e 2016-7-1 -f THU -l SUN -m 3 -p 2

@@ -25,12 +25,13 @@ public class JsonGenerator {
 			System.out.println( "The parsed end date: " + endDateParser );
 
 			Calendar startDate = Calendar.getInstance();
-			startDate.set( startDateParser.getYear(), startDateParser.getMonth() - 1, startDateParser.getDay() );
+			startDate.set( startDateParser.getYear(), startDateParser.getMonth(), startDateParser.getDay() );
 
 			Calendar endDate = Calendar.getInstance();
 			// Subtract one from the month in order to accurately use the correct month. For some reason is uses the next month.
 			// I'll attribute this to the month starting from 0 instead of 1 and I am too lazy to double check it :/
-			endDate.set( endDateParser.getYear(), endDateParser.getMonth() - 1, endDateParser.getDay() );
+			// The Calendar object enumerates the month and day from 0 so we need to subtract that accordingly
+			endDate.set( endDateParser.getYear(), endDateParser.getMonth(), endDateParser.getDay() );
 
 			WeekdaysEnum firstDayOfWeek = argumentProcessor.getFirstWeekDay();
 			WeekdaysEnum lastDayOfWeek = argumentProcessor.getLastWeekDay();

@@ -169,11 +169,11 @@ public final class ProcessCommandLineArguments {
 	}
 
 	public WeekdaysEnum getFirstWeekDay() {
-		return this.parseWeekDay( m_firstWeekDay.toUpperCase() );
+		return Util.parseWeekDay( m_firstWeekDay.toUpperCase() );
 	}
 
 	public WeekdaysEnum getLastWeekDay() {
-		return this.parseWeekDay( m_lastWeekDay.toUpperCase() );
+		return Util.parseWeekDay( m_lastWeekDay.toUpperCase() );
 	}
 
 	public int getMoveValue() {
@@ -191,37 +191,6 @@ public final class ProcessCommandLineArguments {
 	private void printHelp() {
 		HelpFormatter formater = new HelpFormatter();
 		formater.printHelp( "JsonGenerator", m_options );
-	}
-
-	private WeekdaysEnum parseWeekDay( String day ) {
-		WeekdaysEnum dayOfWeek = null;
-		switch( day ) {
-			case "MON":
-				dayOfWeek = WeekdaysEnum.MONDAY;
-				break;
-			case "TUE":
-				dayOfWeek = WeekdaysEnum.TUESDAY;
-				break;
-			case "WED":
-				dayOfWeek = WeekdaysEnum.WEDNESDAY;
-				break;
-			case "THU":
-				dayOfWeek = WeekdaysEnum.THURSDAY;
-				break;
-			case "FRI":
-				dayOfWeek = WeekdaysEnum.FRIDAY;
-				break;
-			case "SAT":
-				dayOfWeek = WeekdaysEnum.SATURDAY;
-				break;
-			case "SUN":
-				dayOfWeek = WeekdaysEnum.SUNDAY;
-				break;
-			default:
-				throw new RuntimeException( "Invalid first day of the week." );
-		}
-		assert( dayOfWeek != null );
-		return dayOfWeek;
 	}
 }
 

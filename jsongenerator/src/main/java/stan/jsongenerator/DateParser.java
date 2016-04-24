@@ -1,5 +1,7 @@
 package stan.jsongenerator;
 
+import java.util.Calendar;
+
 public class DateParser {
 	private final String m_dateString;
 	// The delimiter for the date.
@@ -28,7 +30,7 @@ public class DateParser {
 					break;
 				// Month
 				case 1:
-					m_month = Integer.parseInt( currentToken );
+					m_month = Util.humanToCalendarMonth( Integer.parseInt( currentToken ) );
 					break;
 				// Day
 				case 2:

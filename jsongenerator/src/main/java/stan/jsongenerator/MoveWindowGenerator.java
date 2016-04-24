@@ -35,10 +35,10 @@ public class MoveWindowGenerator {
 
 		// Perform the sliding window
 		m_firstDayCalendar = (Calendar)m_beginningOfWeek.clone();
-		m_firstDayCalendar.add( Calendar.DAY_OF_YEAR, m_firstDayValue );
+		m_firstDayCalendar.add( Calendar.DAY_OF_MONTH, m_firstDayValue );
 
 		m_lastDayCalendar = (Calendar)m_firstDayCalendar.clone();
-		m_lastDayCalendar.add( Calendar.DAY_OF_YEAR, m_lastDayValue - m_firstDayValue );
+		m_lastDayCalendar.add( Calendar.DAY_OF_MONTH, m_lastDayValue - m_firstDayValue );
 
 		++m_firstDayValue;
 		++m_lastDayValue;
