@@ -29,6 +29,6 @@ public interface FlightsReader {
 	 * @return A Trip instance of the parsed file.
 	 * @throws IOException Throws an exception if the parsing of the file fails.
 	 **/
-    public Trip parseFile() throws IOException;
+    public Trip[] parseFile() throws IOException;
 }
 

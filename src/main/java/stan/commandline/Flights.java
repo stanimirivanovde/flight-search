@@ -21,15 +21,19 @@ public class Flights {
 
 			// Get our trip details
 			FlightsReader flightsReader = new JsonReader( argumentProcessor.getJsonFile() );
-			Trip trip = flightsReader.parseFile();
-			trip.setNumberOfPassangers( argumentProcessor.getNumberOfPassangers() );
+			Trip[] tripArray = flightsReader.parseFile();
+			for( Trip trip : tripArray ) {
+				trip.setNumberOfPassangers( argumentProcessor.getNumberOfPassangers() );
+			}
 
 			// This will hold the list of sites we want to search
 			ArrayList<SiteTemplate> sites = new ArrayList<SiteTemplate>();
 			// This will be the permutation algorithm to use
 			PermutationAlgorithm algorithm = new FlightPermutations();
-			for( SupportedSitesEnum s : argumentProcessor.getSites() ) {
-				sites.add( SiteFactory.createSiteTemplate( s, trip, algorithm ) );
+			for( Trip trip : tripArray ) {
+				for( SupportedSitesEnum s : argumentProcessor.getSites() ) {
+					sites.add( SiteFactory.createSiteTemplate( s, trip, algorithm ) );
+				}
 			}
 
 			// Generate the URLs

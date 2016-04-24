@@ -55,11 +55,13 @@ public class JsonReader implements FlightsReader {
 		return file;
 	}
 
-    public Trip parseFile() throws IOException {
+    public Trip[] parseFile() throws IOException {
 		ObjectMapper om = new ObjectMapper();
-		Trip t = om.readValue( file, Trip.class );
-		System.out.println( t );
-		return t;
+		Trip[] tripArray = om.readValue( file, Trip[].class );
+		for( Trip t : tripArray ) {
+			System.out.println( t );
+		}
+		return tripArray;
     }
 }
 
