@@ -1,0 +1,38 @@
+{
+	"depart": {
+		"origins": [
+			"PHL",
+			"BWI",
+			"IAD",
+			"JFK"
+		],
+		"destinations": [
+			"MAD"
+		],
+		"dates": [
+			{
+				"day": 29,
+				"month": 3,
+				"year": 2016
+			}
+		]
+	},
+	"returning": {
+		"origins": [
+			"BCN"
+		],
+		"destinations": [
+			"PHL",
+			"BWI",
+			"IAD",
+			"JFK"
+		],
+		"dates": [
+			{
+				"day": 5,
+				"month": 4,
+				"year": 2016
+			}
+		]
+	}
+}

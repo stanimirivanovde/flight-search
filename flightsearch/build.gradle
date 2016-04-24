@@ -1,0 +1,33 @@
+apply plugin: 'application'
+
+dependencies {
+	// Web Site Automation toolkit library
+	compile 'org.seleniumhq.selenium:selenium-java:2.45.0'
+	compile 'org.seleniumhq.selenium:selenium-server:2.45.0'
+	compile 'org.seleniumhq.selenium:selenium-firefox-driver:2.45.0'
+
+	testCompile 'org.seleniumhq.selenium:selenium-java:2.45.0'
+}
+
+mainClassName = "stan.commandline.Flights"
+jar {
+	manifest {
+		attributes 'Implementation-Title': 'Flight Search',
+				   'Implementation-Version': version,
+				   'Main-Class': 'stan.commandline.Flights'
+	}
+}
+
+gradle.projectsEvaluated {
+	tasks.withType(JavaCompile) {
+		options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+	}
+}
+
+run {    
+	if( project.hasProperty( "args" ) ) {
+		// Need to split the space-delimited value in the exec.args
+		args project.getProperty("args").split()
+	}
+	standardInput = System.in
+}

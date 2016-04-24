@@ -1,0 +1,27 @@
+apply plugin: 'application'
+
+dependencies {
+}
+
+mainClassName = "stan.jsongenerator.JsonGenerator"
+jar {
+	manifest {
+		attributes 'Implementation-Title': 'JSON Generator',
+				   'Implementation-Version': version,
+				   'Main-Class': 'stan.jsongenerator.JsonGenerator'
+	}
+}
+
+gradle.projectsEvaluated {
+	tasks.withType(JavaCompile) {
+		options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+	}
+}
+
+run {    
+	if( project.hasProperty( "args" ) ) {
+		// Need to split the space-delimited value in the exec.args
+		args project.getProperty("args").split()
+	}
+	standardInput = System.in
+}

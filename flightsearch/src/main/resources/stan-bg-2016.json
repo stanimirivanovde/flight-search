@@ -1,41 +1,39 @@
-{
+[{
 	"depart": {
 		"origins": [
 			"PHL",
 			"BWI",
-			"IAD"
+			"IAD",
+			"JFK"
 		],
 		"destinations": [
-			"MAD"
+			"VAR",
+			"SOF"
 		],
 		"dates": [
 			{
-				"day": 29,
-				"month": 3,
+				"day": 16,
+				"month": 7,
 				"year": 2016
 			}
 		]
 	},
 	"returning": {
 		"origins": [
-			"BCN"
+			"FCO"
 		],
 		"destinations": [
 			"PHL",
 			"BWI",
-			"IAD"
+			"IAD",
+			"JFK"
 		],
 		"dates": [
 			{
-				"day": 4,
-				"month": 4,
-				"year": 2016
-			},
-			{
-				"day": 5,
-				"month": 4,
+				"day": 9,
+				"month": 8,
 				"year": 2016
 			}
 		]
 	}
-}
+}]

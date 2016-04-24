@@ -1,46 +1,72 @@
-apply plugin: 'java'
-apply plugin: 'application'
-apply plugin: 'jacoco'
+subprojects {
+	apply plugin: 'java'
+	apply plugin: 'jacoco'
+	// Static code analyzer
+	apply plugin: 'findbugs'
+	// Another source analyzer
+	apply plugin: 'pmd'
 
-sourceCompatibility = 1.8
-version = '1.0'
-mainClassName = "stan.commandline.Flights"
-jar {
-	manifest {
-		attributes 'Implementation-Title': 'Flight Search',
-				   'Implementation-Version': version,
-				   'Main-Class': 'stan.commandline.Flights'
+	// Coding Style enforcer
+	// Disable this for now. I need a valid configuration
+	// file in order to correctly enforce the style. I have no
+	// time at this point to figure that out.
+//	apply plugin: 'checkstyle'
+
+	repositories {
+		mavenCentral()
 	}
-}
 
-repositories {
-	mavenCentral()
-}
-
-dependencies {
-	// JSON Parser libraries
-	compile 'com.fasterxml.jackson.core:jackson-core:2.5.1'
-	compile 'com.fasterxml.jackson.core:jackson-databind:2.5.1'
-	compile 'com.fasterxml.jackson.core:jackson-annotations:2.5.1'
-
-	// Command Line Arguments parser library
-	compile 'commons-cli:commons-cli:1.2'
-
-	// Web Site Automation toolkit library
-	compile 'org.seleniumhq.selenium:selenium-java:2.45.0'
-	compile 'org.seleniumhq.selenium:selenium-server:2.45.0'
-	compile 'org.seleniumhq.selenium:selenium-firefox-driver:2.45.0'
-	compile 'junit:junit:4.12'
-
-	testCompile 'junit:junit:4.+'
-	testCompile 'org.mockito:mockito-all:2.0.2-beta'
-	testCompile 'org.seleniumhq.selenium:selenium-java:2.45.0'
-}
-
-run {    
-	if( project.hasProperty( "args" ) ) {
-		// Need to split the space-delimited value in the exec.args
-		args project.getProperty("args").split()
+	sourceCompatibility = 1.8
+	jar {
+		manifest.attributes provider: 'gradle'
 	}
-	standardInput = System.in
+	version = '1.0'
+
+	dependencies {
+		// JSON Parser libraries
+		compile 'com.fasterxml.jackson.core:jackson-core:2.5.1'
+		compile 'com.fasterxml.jackson.core:jackson-databind:2.5.1'
+		compile 'com.fasterxml.jackson.core:jackson-annotations:2.5.1'
+
+		// Command Line Arguments parser library
+		compile 'commons-cli:commons-cli:1.2'
+
+		compile 'junit:junit:4.12'
+
+		testCompile 'junit:junit:4.+'
+		testCompile 'org.mockito:mockito-all:2.0.2-beta'
+	}
+
+	findbugs {
+		toolVersion = "3.0.1"
+		sourceSets = [sourceSets.main]
+		ignoreFailures = true
+		reportsDir = file("$project.buildDir/findbugs")
+		effort = "max"
+		reportLevel = "low"
+	}
+	// Enable HTML reports
+	tasks.withType(FindBugs) {
+		source = fileTree('src/main/java/')
+		ignoreFailures = true
+		reports {
+			xml.enabled = false
+			//xml.withMessages = true
+			html.enabled = true
+		}
+	}
+
+	pmd {
+		ruleSets = ["java-basic", "java-braces", "java-design"]
+		ignoreFailures = true
+	}
+
+	/*
+	// TODO: enable this once I get a valid config file. The one provided is just an 
+	// example I took from somewhere.
+	checkstyle {
+		configFile = new File(rootDir, "config/checkstyle/checkstyle.xml")
+		ignoreFailures = true
+	}
+	*/
 }
