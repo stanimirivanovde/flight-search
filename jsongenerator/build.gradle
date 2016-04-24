@@ -1,6 +1,7 @@
 apply plugin: 'application'
 
 dependencies {
+	compile project ( ':flightsearch' )
 }
 
 mainClassName = "stan.jsongenerator.JsonGenerator"

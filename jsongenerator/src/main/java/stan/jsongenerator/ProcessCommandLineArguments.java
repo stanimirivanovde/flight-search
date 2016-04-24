@@ -1,4 +1,4 @@
-package stan.commandline;
+package stan.jsongenerator;
 
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
@@ -9,14 +9,11 @@ import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.ParseException;
 
-import java.io.File;
 import java.util.ArrayList;
 
-import stan.flightsearch.SupportedSitesEnum;
-
-public class ProcessCommandLineArguments {
-	private final String[] m_args = null;
-	private Options m_options = new Options();
+public final class ProcessCommandLineArguments {
+	private final String[] m_args;
+	private Options m_options = null;
 
 	// The actual parsed options will go to these variables
 	private String m_depart = null;
@@ -25,11 +22,16 @@ public class ProcessCommandLineArguments {
 	private String m_endDate = null;
 	private String m_firstWeekDay = null;
 	private String m_lastWeekDay = null;
-	private int m_moveValue = 0;
+	private int m_moveValue = 1;
 	private String m_fileName = null;
 
 	public ProcessCommandLineArguments( String[] args ) {
-		m_args = nullCheck( args, "arguments"  );
+		if( args == null ) {
+			throw new NullPointerException( "Null arguments." );
+		}
+		// Make a copy of the array.
+		m_args = new String[ args.length ];
+		System.arraycopy( args, 0, m_args, 0, args.length );
 	}
 
 	public void createOptions() {
@@ -38,16 +40,16 @@ public class ProcessCommandLineArguments {
 
 		Option help = new Option( "h", "help", noArguments, "Print this message." );
 		Option depart = OptionBuilder
-			.withArgName( "AIRPORT" ).
+			.withArgName( "AIRPORT" )
 			.withLongOpt( "depart-airport" )
-			.withDescription( "The airport for departure." ).
+			.withDescription( "The airport for departure." )
 			.isRequired()
 			.hasArgs( 1 )
 			.create( "d" );
 		Option arrival = OptionBuilder
 			.withArgName( "AIRPORT" )
 			.withLongOpt( "arrival-airport" )
-			.withDescription( "Arrival airport." ).
+			.withDescription( "Arrival airport." )
 			.isRequired()
 			.hasArgs( 1 )
 			.create( "a" );
@@ -82,7 +84,7 @@ public class ProcessCommandLineArguments {
 		Option moveValue = OptionBuilder
 			.withArgName( "VALUE" )
 			.withLongOpt( "move-value" )
-			.withDescription( "The number of days to generate a moving window. For each move value a new Trip will be generated with the first and last days incremented by one. Allowed values is 0 to 6. Default is 0" )
+			.withDescription( "The number of days to generate a moving window. For each move value a new Trip will be generated with the first and last days incremented by one. Allowed values is 1 to 6. Default is 1" )
 			.hasArgs( 1 )
 			.create( "m" );
 		Option fileName = OptionBuilder
@@ -92,40 +94,22 @@ public class ProcessCommandLineArguments {
 			.hasArgs( 1 )
 			.create( "w" );
 
-		options.addOption( depart );
-		options.addOption( arrival );
-		options.addOption( startDate );
-		options.addOption( endDate );
-		options.addOption( firstDay );
-		options.addOption( endDay );
-		options.addOption( moveValue );
-		options.addOption( fileName );
-	}
-
-	private void printHelp() {
-		HelpFormatter formater = new HelpFormatter();
-		formater.printHelp("JsonGenerator", options);
-	}
-
-	private ArrayList<SupportedSitesEnum> getSupportedSites( String[] sitesArray ) {
-		ArrayList<SupportedSitesEnum> list = new ArrayList<SupportedSitesEnum>();
-		int arrayIndex = 0;
-		try {
-			while( arrayIndex < sitesArray.length ) {
-				list.add( SupportedSitesEnum.valueOf( sitesArray[ arrayIndex ].toUpperCase() ) );
-				++arrayIndex;
-			}
-		} catch( IllegalArgumentException e ) {
-			System.err.println( "Unsupported site has been specified: " + sitesArray[ arrayIndex ] );
-			printHelp();
-		}
-		return list;
+		m_options = new Options();
+		m_options.addOption( help );
+		m_options.addOption( depart );
+		m_options.addOption( arrival );
+		m_options.addOption( startDate );
+		m_options.addOption( endDate );
+		m_options.addOption( firstDay );
+		m_options.addOption( lastDay );
+		m_options.addOption( moveValue );
+		m_options.addOption( fileName );
 	}
 
 	public void parse() {
 		CommandLineParser parser = new BasicParser();
 		try {
-			CommandLine cmd = parser.parse(options, args);
+			CommandLine cmd = parser.parse( m_options, m_args );
 			if( cmd.hasOption( "h" ) ) {
 				printHelp();
 				System.exit( 0 );
@@ -134,8 +118,8 @@ public class ProcessCommandLineArguments {
 			m_arrival = cmd.getOptionValue( "a" );
 			m_startDate = cmd.getOptionValue( "s" );
 			m_endDate = cmd.getOptionValue( "e" );
-			m_firstDay = cmd.getOptionValue( "f" );
-			m_lastDay = cmd.getOptionValue( "l" );
+			m_firstWeekDay = cmd.getOptionValue( "f" );
+			m_lastWeekDay = cmd.getOptionValue( "l" );
 			if( cmd.hasOption( "m" ) ) {
 				m_moveValue = Integer.parseInt( cmd.getOptionValue( "m" ) );
 				if( m_moveValue < 0 || m_moveValue > 6 ) {
@@ -168,12 +152,12 @@ public class ProcessCommandLineArguments {
 		return m_endDate;
 	}
 
-	public String getFirstDay() {
-		return m_firstDay.toUpperCase();
+	public WeekdaysEnum getFirstWeekDay() {
+		return this.parseWeekDay( m_firstWeekDay.toUpperCase() );
 	}
 
-	public String getLastDay() {
-		return m_lastDay.toUpperCase();
+	public WeekdaysEnum getLastWeekDay() {
+		return this.parseWeekDay( m_lastWeekDay.toUpperCase() );
 	}
 
 	public int getMoveValue() {
@@ -182,6 +166,44 @@ public class ProcessCommandLineArguments {
 
 	public String getFileName() {
 		return m_fileName;
+	}
+
+	private void printHelp() {
+		HelpFormatter formater = new HelpFormatter();
+		formater.printHelp( "JsonGenerator", m_options );
+	}
+
+	private WeekdaysEnum parseWeekDay( String day ) {
+		System.out.println( "The day to parse: " + day );
+		WeekdaysEnum dayOfWeek = null;
+		switch( day ) {
+			case "MON":
+				dayOfWeek = WeekdaysEnum.MONDAY;
+				break;
+			case "TUE":
+				dayOfWeek = WeekdaysEnum.TUESDAY;
+				break;
+			case "WED":
+				dayOfWeek = WeekdaysEnum.WEDNESDAY;
+				break;
+			case "THU":
+				dayOfWeek = WeekdaysEnum.THURSDAY;
+				break;
+			case "FRI":
+				dayOfWeek = WeekdaysEnum.FRIDAY;
+				break;
+			case "SAT":
+				dayOfWeek = WeekdaysEnum.SATURDAY;
+				break;
+			case "SUN":
+				dayOfWeek = WeekdaysEnum.SUNDAY;
+				break;
+			default:
+				throw new RuntimeException( "Invalid first day of the week." );
+		}
+		assert( dayOfWeek != null );
+		System.out.println( "The parsed day: " + dayOfWeek );
+		return dayOfWeek;
 	}
 }
 

@@ -1,68 +1,42 @@
-package stan.commandline;
+package stan.jsongenerator;
 
 import java.util.ArrayList;
-import java.awt.Desktop;
+import java.util.Calendar;
 
-import stan.flightsearch.FlightsReader;
-import stan.flightsearch.JsonReader;
-import stan.flightsearch.Trip;
-import stan.flightsearch.SiteFactory;
-import stan.flightsearch.URLOpener;
-import stan.flightsearch.SiteTemplate;
-import stan.flightsearch.SupportedSitesEnum;
-import stan.flightsearch.FlightPermutations;
-import stan.flightsearch.PermutationAlgorithm;
+public class JsonGenerator {
+	private JsonGenerator() {
+	}
 
-public class Flights {
 	public static void main( String[] args ) {
 		try {
 			ProcessCommandLineArguments argumentProcessor = new ProcessCommandLineArguments( args );
 			argumentProcessor.createOptions();
 			argumentProcessor.parse();
 
-			/*
-			// Get our trip details
-			FlightsReader flightsReader = new JsonReader( argumentProcessor.getJsonFile() );
-			Trip[] tripArray = flightsReader.parseFile();
-			for( Trip trip : tripArray ) {
-				trip.setNumberOfPassangers( argumentProcessor.getNumberOfPassangers() );
-			}
+			DateParser startDateParser = new DateParser( argumentProcessor.getStartDate() );
+			startDateParser.parse();
+			System.out.println( "The parsed start date: " + startDateParser );
 
-			// This will hold the list of sites we want to search
-			ArrayList<SiteTemplate> sites = new ArrayList<SiteTemplate>();
-			// This will be the permutation algorithm to use
-			PermutationAlgorithm algorithm = new FlightPermutations();
-			for( Trip trip : tripArray ) {
-				for( SupportedSitesEnum s : argumentProcessor.getSites() ) {
-					sites.add( SiteFactory.createSiteTemplate( s, trip, algorithm ) );
-				}
-			}
+			DateParser endDateParser = new DateParser( argumentProcessor.getEndDate() );
+			endDateParser.parse();
+			System.out.println( "The parsed end date: " + endDateParser );
 
-			// Generate the URLs
-			for( SiteTemplate site : sites ) {
-				if( argumentProcessor.getRoundtrip() == true ) {
-					site.generateRoundtripUrls();
-				} else {
-					site.generateUrls();
-				}
-			}
+			Calendar startDate = Calendar.getInstance();
+			startDate.set( startDateParser.getYear(), startDateParser.getMonth() - 1, startDateParser.getDay() );
+			System.out.println( "Start calendar: " + startDate );
 
-			if( !argumentProcessor.getGenerateOnly() ) {
-				if( !Desktop.isDesktopSupported() ) {
-					throw new IllegalStateException( "The current system doesn't support a desktop operation." );
-				}
+			Calendar endDate = Calendar.getInstance();
+			// Subtract one from the month in order to accurately use the correct month. For some reason is uses the next month.
+			// I'll attribute this to the month starting from 0 instead of 1 and I am too lazy to double check it :/
+			endDate.set( endDateParser.getYear(), endDateParser.getMonth() - 1, endDateParser.getDay() );
+			System.out.println( "End calendar: " + endDate );
 
-				// Grab the current system's desktop.
-				Desktop desktop = Desktop.getDesktop();
+			WeekdaysEnum firstDayOfWeek = argumentProcessor.getFirstWeekDay();
+			WeekdaysEnum lastDayOfWeek = argumentProcessor.getLastWeekDay();
+			int numberOfMoveOperations = argumentProcessor.getMoveValue();
 
-				for( SiteTemplate site: sites ) {
-					// Create a URLOpener object and pass in the generated site urls.
-					URLOpener urlOpener = new URLOpener( desktop, site.getGeneratedUrls(), argumentProcessor.getNumberOfPagesToOpenAtOnce(), argumentProcessor.getSleepTime() );
-					// Open the URLs
-					urlOpener.start();
-				}
-			}
-			*/
+			TripGenerator tripGenerator = new TripGenerator( startDate, endDate, numberOfMoveOperations, firstDayOfWeek, lastDayOfWeek, argumentProcessor.getDepart(), argumentProcessor.getArrival() );
+			tripGenerator.generateTrips();
 		} catch( Exception e ) { 
 			System.out.println( "Unexpected exception: " + e );
 			e.printStackTrace();
