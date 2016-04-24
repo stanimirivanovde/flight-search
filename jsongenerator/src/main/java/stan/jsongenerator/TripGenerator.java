@@ -77,7 +77,7 @@ public class TripGenerator {
 			// Go to the next week.
 			beginningOfWeekCalendar.add( Calendar.DAY_OF_WEEK, 7 );
 		}
-		System.out.println( "The final trips: " + tripList );
+		System.out.println( "Number of trips generated: " + tripList.size() );
 
 		return tripList;
 	}

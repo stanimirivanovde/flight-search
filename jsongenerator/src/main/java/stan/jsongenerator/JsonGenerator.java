@@ -26,13 +26,11 @@ public class JsonGenerator {
 
 			Calendar startDate = Calendar.getInstance();
 			startDate.set( startDateParser.getYear(), startDateParser.getMonth() - 1, startDateParser.getDay() );
-			System.out.println( "Start calendar: " + startDate );
 
 			Calendar endDate = Calendar.getInstance();
 			// Subtract one from the month in order to accurately use the correct month. For some reason is uses the next month.
 			// I'll attribute this to the month starting from 0 instead of 1 and I am too lazy to double check it :/
 			endDate.set( endDateParser.getYear(), endDateParser.getMonth() - 1, endDateParser.getDay() );
-			System.out.println( "End calendar: " + endDate );
 
 			WeekdaysEnum firstDayOfWeek = argumentProcessor.getFirstWeekDay();
 			WeekdaysEnum lastDayOfWeek = argumentProcessor.getLastWeekDay();

@@ -194,7 +194,6 @@ public final class ProcessCommandLineArguments {
 	}
 
 	private WeekdaysEnum parseWeekDay( String day ) {
-		System.out.println( "The day to parse: " + day );
 		WeekdaysEnum dayOfWeek = null;
 		switch( day ) {
 			case "MON":
@@ -222,7 +221,6 @@ public final class ProcessCommandLineArguments {
 				throw new RuntimeException( "Invalid first day of the week." );
 		}
 		assert( dayOfWeek != null );
-		System.out.println( "The parsed day: " + dayOfWeek );
 		return dayOfWeek;
 	}
 }
