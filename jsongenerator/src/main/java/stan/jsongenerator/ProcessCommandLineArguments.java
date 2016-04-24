@@ -24,6 +24,7 @@ public final class ProcessCommandLineArguments {
 	private String m_lastWeekDay = null;
 	private int m_moveValue = 1;
 	private String m_fileName = null;
+	private int m_numberOfPassangers = 1;
 
 	public ProcessCommandLineArguments( String[] args ) {
 		if( args == null ) {
@@ -93,6 +94,12 @@ public final class ProcessCommandLineArguments {
 			.withDescription( "The filename to use to save the generated JSON objects. The default filename is: depart_airport-arrival_airport-start_date-end_date.json" )
 			.hasArgs( 1 )
 			.create( "w" );
+		Option passangers = OptionBuilder
+			.withArgName( "COUNT" )
+			.withLongOpt( "number-of-passangers" )
+			.withDescription( "The number of passangers." )
+			.hasArgs( 1 )
+			.create( "p" );
 
 		m_options = new Options();
 		m_options.addOption( help );
@@ -104,6 +111,7 @@ public final class ProcessCommandLineArguments {
 		m_options.addOption( lastDay );
 		m_options.addOption( moveValue );
 		m_options.addOption( fileName );
+		m_options.addOption( passangers );
 	}
 
 	public void parse() {
@@ -128,6 +136,14 @@ public final class ProcessCommandLineArguments {
 			}
 			if( cmd.hasOption( "w" ) ) {
 				m_fileName = cmd.getOptionValue( "w" );
+			} else {
+				// Craft the default file name
+				String delimiter = "-";
+				String extension = ".json";
+				m_fileName = new String( m_depart + delimiter + m_arrival + delimiter + m_startDate + delimiter + m_endDate + extension );
+			}
+			if( cmd.hasOption( "p" ) ) {
+				m_numberOfPassangers = Integer.parseInt( cmd.getOptionValue( "p" ) );
 			}
 		} catch (ParseException e) {
 			System.err.println( e.getMessage() );
@@ -166,6 +182,10 @@ public final class ProcessCommandLineArguments {
 
 	public String getFileName() {
 		return m_fileName;
+	}
+
+	public int getNumberOfPassangers() {
+		return m_numberOfPassangers;
 	}
 
 	private void printHelp() {

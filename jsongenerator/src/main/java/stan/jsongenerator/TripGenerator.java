@@ -18,8 +18,9 @@ public class TripGenerator {
 	private final WeekdaysEnum m_lastWeekday;
 	private final String m_departAirport;
 	private final String m_arrivalAirport;
+	private final int m_numberOfPassangers;
 
-	public TripGenerator( Calendar startDate, Calendar endDate, int moveWindowValue, WeekdaysEnum firstWeekday, WeekdaysEnum lastWeekday, String departAirport, String arrivalAirport ) {
+	public TripGenerator( Calendar startDate, Calendar endDate, int moveWindowValue, WeekdaysEnum firstWeekday, WeekdaysEnum lastWeekday, String departAirport, String arrivalAirport, int numberOfPassangers ) {
 		m_startDate = Util.nullCheck( startDate, "start date" );
 		m_endDate = Util.nullCheck( endDate, "end date" );
 		if( moveWindowValue < 1 ) {
@@ -31,17 +32,22 @@ public class TripGenerator {
 		m_lastWeekday = Util.nullCheck( lastWeekday, "last weekday" );
 		m_departAirport = Util.nullCheck( departAirport, "start date" );
 		m_arrivalAirport = Util.nullCheck( arrivalAirport, "start date" );
+
+		if( numberOfPassangers < 1 ) {
+			throw new IllegalArgumentException( "The number of passangers is invalid." );
+		}
+		m_numberOfPassangers = numberOfPassangers;
 	}
 
-	public Trip[] generateTrips() {
+	public List<Trip> generateTrips() {
 		// Find first date of the week
 		Calendar beginningOfWeekCalendar = (Calendar)m_startDate.clone();
 		beginningOfWeekCalendar.add( Calendar.DAY_OF_WEEK, beginningOfWeekCalendar.getFirstDayOfWeek() - beginningOfWeekCalendar.get( Calendar.DAY_OF_WEEK ) );
 
-		ArrayList<String> departAirportList = new ArrayList<>();
+		List<String> departAirportList = new ArrayList<>();
 		departAirportList.add( m_departAirport );
 
-		ArrayList<String> returnAirportList = new ArrayList<>();
+		List<String> returnAirportList = new ArrayList<>();
 		returnAirportList.add( m_arrivalAirport );
 
 		List<Trip> tripList = new ArrayList<>();
@@ -58,14 +64,14 @@ public class TripGenerator {
 				System.out.println( "The depart date: " + departDate );
 				System.out.println( "The return date: " + returnDate );
 
-				ArrayList<FlightDate> departDateList = new ArrayList<>();
+				List<FlightDate> departDateList = new ArrayList<>();
 				departDateList.add( departDate );
-				ArrayList<FlightDate> returnDateList = new ArrayList<>();
+				List<FlightDate> returnDateList = new ArrayList<>();
 				returnDateList.add( departDate );
 
 				TravelInfo departTravel = new TravelInfo( departAirportList, returnAirportList, departDateList );
 				TravelInfo returnTravel = new TravelInfo( returnAirportList, departAirportList, returnDateList );
-				Trip trip = new Trip( departTravel, returnTravel, 1 );
+				Trip trip = new Trip( departTravel, returnTravel, m_numberOfPassangers );
 				tripList.add( trip );
 			}
 			// Go to the next week.
@@ -73,9 +79,6 @@ public class TripGenerator {
 		}
 		System.out.println( "The final trips: " + tripList );
 
-		// TODO: remove this conversion from here and return a normal list.
-		Trip[] tripArray = new Trip[ tripList.size() ];
-		tripArray = tripList.toArray( tripArray );
-		return tripArray;
+		return tripList;
 	}
 }

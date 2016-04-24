@@ -1,7 +1,10 @@
 package stan.jsongenerator;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Calendar;
+
+import stan.flightsearch.Trip;
 
 public class JsonGenerator {
 	private JsonGenerator() {
@@ -35,8 +38,12 @@ public class JsonGenerator {
 			WeekdaysEnum lastDayOfWeek = argumentProcessor.getLastWeekDay();
 			int numberOfMoveOperations = argumentProcessor.getMoveValue();
 
-			TripGenerator tripGenerator = new TripGenerator( startDate, endDate, numberOfMoveOperations, firstDayOfWeek, lastDayOfWeek, argumentProcessor.getDepart(), argumentProcessor.getArrival() );
-			tripGenerator.generateTrips();
+			TripGenerator tripGenerator = new TripGenerator( startDate, endDate, numberOfMoveOperations, firstDayOfWeek, lastDayOfWeek, argumentProcessor.getDepart(), argumentProcessor.getArrival(), argumentProcessor.getNumberOfPassangers() );
+			List<Trip> tripList = tripGenerator.generateTrips();
+
+			System.out.println( "Writing to file name: " + argumentProcessor.getFileName() );
+			JsonWriter writer = new JsonWriter( tripList, argumentProcessor.getFileName() );
+			writer.write();
 		} catch( Exception e ) { 
 			System.out.println( "Unexpected exception: " + e );
 			e.printStackTrace();
