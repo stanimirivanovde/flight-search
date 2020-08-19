@@ -15,7 +15,7 @@ Find the cheapest possible combination of airports and dates for your trip. Arou
 
 # Usage
 You can look at the help by supplying the -h argument to run.sh:
-```bash
+```
 usage: FlightSearch
  -f,--file <FILE>                         The JSON file that contains your
                                           search configuration.
@@ -81,10 +81,12 @@ Define a JSON file for your flight. Lets call it test.json Here is an example:
             ]
         }
     }
-]```
+]
+```
+
 
 Now lets run our permutation algorithm to see how many combinations exist:
-```bash
+```
 ./run.sh -g -f src/main/resources/test-2020.json -s momondo
 
 > Task :flightsearch:run
