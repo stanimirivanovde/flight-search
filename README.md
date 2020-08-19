@@ -129,6 +129,3 @@ We see that we generated 16 permutations. The website we used is momondo.com. We
 ```
 
 At this point you're done. You just did 16 flight searches with all of your important combinations and you didn't have to click a mouse once. Go through the results in your browser and find the best flight.
-
-Cheers,
-Stan
